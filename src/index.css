@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+
+
+    @font-face {
+        font-family: Vazir;
+        src: url(/fonts/Vazir.ttf) format(truetype);
+    }
+
+
+
+    body {
+        font-family: Vazir;
+        direction: rtl;
+        overflow: hidden;
+        background-color: #fdfeff;
+    }
+}
+
+@layer utilities {
+
+    .active {
+        width: 180px;
+        border-radius: 20px;
+    }
+
+    .activeNav::before , .activeNav::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background: transparent;
+        transition: all 200ms;
+    }
+
+    .activeNav::before {
+
+        top: -20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 7.5px 7.5px 0 7.5px #fdfeff;
+        transform: rotate(90deg);
+    }
+
+    .activeNav::after {
+        bottom: -20px;
+        border-top-right-radius: 20px;
+        box-shadow: 7.5px -7.5px 0 7.5px #fdfeff;
+        transform: rotate(-90deg);
+
+    }
+
+    .shape:hover::before,
+    .shape:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background: transparent;
+        transition: all 200ms;
+    }
+
+
+    .shape:hover::before {
+
+        top: -20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 7.5px 7.5px 0 7.5px #fdfeff;
+        transform: rotate(90deg);
+    }
+
+    .shape:hover::after {
+        bottom: -20px;
+        border-top-right-radius: 20px;
+        box-shadow: 7.5px -7.5px 0 7.5px #fdfeff;
+        transform: rotate(-90deg);
+
+    }
+
+
+    .toggle::before,
+    .toggle::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 2.5px;
+        border-radius: 3px;
+        background: #565656;
+        transition: 1s;
+    }
+
+    .toggle::before {
+        transform: translateY(-5px);
+    }
+
+    .toggle::after {
+        transform: translateY(5px);
+    }
+
+    .active .toggle::before {
+        transform: translateY(0px) rotate(-405deg);
+    }
+
+    .active .toggle::after {
+        transform: translateY(0px) rotate(225deg);
+    }
+}
