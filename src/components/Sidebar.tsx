@@ -18,7 +18,7 @@ import { useState } from "react";
 
 export default function Sidebar() {
 
-  const [toggle, setToggle] = useState<boolean>(true)
+  const [toggle, setToggle] = useState<boolean>(false)
   const [currentLink, setCurrentLink] = useState<string>('home')
 
   const extendSidebar = () => {

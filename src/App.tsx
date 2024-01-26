@@ -8,7 +8,7 @@ function App() {
   const router = useRoutes(routes)
 
   return (
-    <div className="flex justify-between p-5 gap-x-5">
+    <div className="flex justify-between p-2 xs:p-5 gap-x-5">
       <div className="w-[80px]">
         <Sidebar />
       </div>

@@ -16,6 +16,10 @@ export default {
         'primary-b':'#01C9D8',
         'white':'#fff',
         'secondery':'#fdfeff'
+      },
+      screens:{
+        'xs':'500px',
+        '2xs':'325px'
       }
     },
   },
