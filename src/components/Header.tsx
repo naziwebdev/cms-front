@@ -6,10 +6,15 @@ import { useState } from "react";
 
 export default function Header() {
   const [toggleSwitch, setToggleSwitch] = useState<boolean>(false)
+  const [toggleNotifs, setToggleNotifs] = useState<boolean>(false)
 
   const changeSwitch = () => {
     setToggleSwitch(prev => !prev)
   }
+  const toggleNotifsHandler = () => {
+    setToggleNotifs(prev => !prev)
+  }
+
 
 
   return (
@@ -28,11 +33,46 @@ export default function Header() {
           }
         </div>
         <div className="relative ms-1 flex justify-center items-center rounded-lg cursor-pointer">
-          <IoMdNotifications className="text-2xl md:text-[1.7rem] lg:text-3xl text-stone-600" />
+          <IoMdNotifications className="text-2xl md:text-[1.7rem] lg:text-3xl
+           text-stone-600"  onClick={toggleNotifsHandler}/>
           <span className="w-5 h-5 flex justify-center items-center absolute 
           -top-3 md:-top-2.5 -right-2 bg-primary-pk text-white
           rounded-full text-[.65rem] md:text-xs lg:text-sm  ">2</span>
+          {toggleNotifs &&
+            <div className="absolute -bottom-28 md:-bottom-32 -right-28 z-10 w-44 h-24 md:w-64 md:h-28 p-3 bg-white 
+            rounded-xl shadow-xl overflow-auto duration-700 ease-in">
+              <ul className="flex flex-col gap-y-1 md:gap-y-2 list-disc list-inside 
+              text-xs md:text-sm marker:text-primary-y marker:text-xl [&>*:nth-child(odd)]:text-primary-p
+              [&>*:nth-child(even)]:text-primary-pk">
+                <li className="">
+                  <label htmlFor="task-1" className="">
+                    <input id="task-1" type="checkbox" className="hidden tick" />
+                    <span className="item cursor-pointer">  اپلود کردن فایل های دوره نکست</span>
+                  </label>
+                </li>
+                <li className="">
+                  <label htmlFor="task-2" className="">
+                    <input id="task-2" type="checkbox" className="hidden tick" />
+                    <span className="item cursor-pointer">  اپلود کردن فایل های دوره نکست</span>
+                  </label>
+                </li>
+                <li className="">
+                  <label htmlFor="task-3" className="">
+                    <input id="task-3" type="checkbox" className="hidden tick" />
+                    <span className="item cursor-pointer">  اپلود کردن فایل های دوره نکست</span>
+                  </label>
+                </li>
+                <li className="">
+                  <label htmlFor="task-4" className="">
+                    <input id="task-4" type="checkbox" className="hidden tick" />
+                    <span className="item cursor-pointer">  اپلود کردن فایل های دوره نکست</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          }
         </div>
+
         <div className="flex items-center gap-x-1.5 md:gap-x-2.5">
           <div className="hidden sm:block text-end">
             <p className="font-bold text-xs md:text-sm lg:text-base text-stone-800 pb-1.5 lg:pb-2">نازنین رستگار</p>
