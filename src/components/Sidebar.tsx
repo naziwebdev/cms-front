@@ -29,13 +29,15 @@ export default function Sidebar() {
 
 
   return (
-    <div className={`fixed inset-y-5 z-10 w-[68px] rounded-full overflow-hidden bg-primary-p border-s-[12px] py-5 border-purple-800 shadow-[-15px_15px_25px_rgba(0,0,0,.15)] duration-300 ease-out ${toggle ? 'active' : ''}`}>
+    <div className={`fixed  inset-y-5 z-10 w-[68px] rounded-full overflow-hidden
+     bg-primary-p border-s-[12px] py-5 border-purple-800 shadow-[-15px_15px_25px_rgba(0,0,0,.15)] duration-300 ease-out ${toggle ? 'active' : ''}`}>
       <ul className="w-full">
         <li className={`relative w-full rounded-tr-[30px] rounded-br-[30px] text-white
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'home' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('home')}>
-          <Link to={'/'} className="relative z-10 flex w-full gap-x-4 justify-start text-2xl">
+          <Link to={'/'} className="relative z-10 flex w-full gap-x-4 justify-start 
+        text-2xl">
             <span className=""><ImHome /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}
             >خانه</span>
@@ -141,7 +143,7 @@ export default function Sidebar() {
           </Link>
         </li>
       </ul>
-      <div className={`flex justify-center items-center absolute bottom-6 left-3.5 w-[35px] h-[35px] rounded-full hover:bg-white
+      <div className={`flex justify-center items-center absolute z-20 bottom-6 left-3.5 w-[35px] h-[35px] rounded-full hover:bg-white
      cursor-pointer hover:transition-all hover:duration-300 hover:ease-in bg-primary-y toggle`} onClick={extendSidebar}></div>
     </div>
 

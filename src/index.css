@@ -19,9 +19,31 @@
     body {
         font-family: Vazir;
         direction: rtl;
-        overflow: hidden;
+        overflow-x: hidden;
         background-color: #f5f5f5;
     }
+
+    *{
+        scrollbar-color: #01C9D8;
+        scrollbar-width:thin;
+    }
+
+    *::-webkit-scrollbar{
+        width: 10px;
+        height: 10px;
+    }
+
+    *::-webkit-scrollbar-track{
+        background:#d4d4d4 ;
+        border-radius: 10px;
+    }
+
+    *::-webkit-scrollbar-thumb{
+        background-color:#ffcd30;
+        border-radius: 20px;
+    }
+
+ 
 }
 
 @layer utilities {

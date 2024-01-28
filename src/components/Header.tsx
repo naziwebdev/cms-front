@@ -18,7 +18,7 @@ export default function Header() {
 
 
   return (
-    <div className='flex justify-end sm:justify-between items-center lg:p-2.5 gap-x-4'>
+    <div className='flex justify-end sm:justify-between items-center lg:p-2.5 gap-x-4 mb-5'>
       <h1 className="hidden sm:flex text-base md:text-lg lg:text-xl font-bold text-gray-600">
         به داشبورد خوش آمدید !
       </h1>
