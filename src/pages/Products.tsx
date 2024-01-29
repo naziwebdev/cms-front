@@ -5,14 +5,14 @@ import { IoMdAddCircle } from "react-icons/io";
 
 export default function Products() {
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-160px)]">
+    <div className="flex flex-col items-center  xl:h-[calc(100vh-160px)]">
       <div className="self-start w-full xs:w-1/2 md:w-1/3 lg:w-1/4 p-3 xl:p-3.5 mb-5 bg-primary-y rounded-2xl shadow-lg cursor-pointer">
         <h3 className="flex justify-center items-center gap-x-2.5 text-white">
           <IoMdAddCircle className="text-xl md:text-2xl xl:text-3xl" />
           <p className="text-sm md:text-base xl:text-xl text-nowrap">افزودن محصول جدید</p>
         </h3>
       </div>
-      <div className="w-[calc(100vw-90px)] xs:w-[calc(100vw-130px)] h-[64vh] bg-white shadow-xl rounded-2xl border-2 border-zinc-300/30 
+      <div className="w-[calc(100vw-90px)] xs:w-[calc(100vw-130px)] h-[70vh] xl:h-[64vh] bg-white shadow-xl rounded-2xl border-2 border-zinc-300/30 
       p-4 overflow-auto">
         <h2 className="pb-4 text-xl ">محصولات</h2>
         <table className="w-full text-sm md:text-base">

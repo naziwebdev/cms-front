@@ -10,7 +10,7 @@ import { FaMoneyCheckAlt } from "react-icons/fa";
 
 import { FaTasks } from "react-icons/fa";
 import { MdNoteAlt } from "react-icons/md";
-import { IoMdMail } from "react-icons/io";
+// import { IoMdMail } from "react-icons/io";
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 import { useState } from "react";
 
@@ -124,7 +124,7 @@ export default function Sidebar() {
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>یادداشت ها</span>
           </Link>
         </li>
-        <li className={`relative w-full rounded-tr-[30px] rounded-br-[30px] text-white
+        {/* <li className={`relative w-full rounded-tr-[30px] rounded-br-[30px] text-white
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'mail' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('mail')}>
@@ -132,7 +132,7 @@ export default function Sidebar() {
             <span className=""><IoMdMail /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>ایمیل</span>
           </Link>
-        </li>
+        </li> */}
         <li className={`relative w-full rounded-tr-[30px] rounded-br-[30px] text-white
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'calender' && 'bg-secondery activeNav !text-primary-p '}`}
