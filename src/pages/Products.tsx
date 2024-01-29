@@ -2,11 +2,28 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { MdEditSquare } from "react-icons/md";
 import { IoMdAddCircle } from "react-icons/io";
 
+import DetailsModal from "../components/detailsModal";
+import FormInput from "../components/FormInput";
+import { useState } from "react";
+
 
 export default function Products() {
+
+  const [toggleModal, setToggleModal] = useState<boolean>(false)
+
+  const openModalHandler = () => {
+    setToggleModal(true)
+  }
+
+  const closeModalHandler = () => {
+    setToggleModal(false)
+  }
+
   return (
     <div className="flex flex-col items-center  xl:h-[calc(100vh-160px)]">
-      <div className="self-start w-full xs:w-1/2 md:w-1/3 lg:w-1/4 p-3 xl:p-3.5 mb-5 bg-primary-y rounded-2xl shadow-lg cursor-pointer">
+      <div className="self-start w-full xs:w-1/2 md:w-1/3 lg:w-1/4 p-3 xl:p-3.5 
+      mb-5 bg-primary-y rounded-2xl shadow-lg cursor-pointer"
+      onClick={openModalHandler}>
         <h3 className="flex justify-center items-center gap-x-2.5 text-white">
           <IoMdAddCircle className="text-xl md:text-2xl xl:text-3xl" />
           <p className="text-sm md:text-base xl:text-xl text-nowrap">افزودن محصول جدید</p>
@@ -170,6 +187,18 @@ export default function Products() {
           </tbody>
         </table>
       </div>
+      {toggleModal && <DetailsModal onClose ={closeModalHandler}>
+        <h2 className="text-xl font-bold">مشخصات کاربر جدید</h2>
+        <form className="w-full grid grid-cols-1 xs:grid-cols-2 gap-6 lg:gap-14 gap-x-24 mt-10 p-5 ">
+          <FormInput titleFa="نام و نام خانوادگی" titleEn="name" />
+          <FormInput titleFa="نام کاربری" titleEn="username" />
+          <FormInput titleFa="ایمیل" titleEn="email" />
+          <FormInput titleFa="شماره تماس" titleEn="phone" />
+          <FormInput titleFa="پسورد" titleEn="password" />
+        </form>
+        <button className="bg-primary-y rounded-xl w-40 h-12 ms-auto" >تایید</button>
+      </DetailsModal>
+      }
     </div>
   )
 }
