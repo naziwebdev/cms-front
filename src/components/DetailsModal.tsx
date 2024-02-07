@@ -15,7 +15,7 @@ export default function DetailsModal({ children, onClose }: modalItems) {
 
     return (
         <div className="modal active-modal">
-            <div className="relative w-11/12 md:w-3/4 lg:w-3/5 bg-white rounded-2xl p-10">
+            <div className="relative w-11/12 md:w-3/4 lg:w-3/5 bg-white rounded-2xl p-2 xs:p-10">
                 <span className="absolute top-4 right-4 flex justify-center items-center text-xl font-bold
             rounded-lg w-8 h-7 cursor-pointer bg-black text-white"
                     onClick={closeModal}>&#9747;</span>
