@@ -29,7 +29,7 @@ export default function Sidebar() {
 
 
   return (
-    <div className={`fixed  inset-y-5 z-10 w-[68px] rounded-full overflow-hidden
+    <div className={`fixed  inset-y-5 z-40 w-[68px] rounded-full overflow-hidden
      bg-primary-p border-s-[12px] py-5 border-purple-800 shadow-[-15px_15px_25px_rgba(0,0,0,.15)] duration-300 ease-out ${toggle ? 'active' : ''}`}>
       <ul className="w-full">
         <li className={`relative w-full rounded-tr-[30px] rounded-br-[30px] text-white
