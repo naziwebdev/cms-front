@@ -141,6 +141,7 @@
     .tick:checked+.item {
         text-decoration: line-through;
     }
+
 }
 
 
