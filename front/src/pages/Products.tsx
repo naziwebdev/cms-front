@@ -1,32 +1,180 @@
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { MdEditSquare } from "react-icons/md";
-
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import swal from "sweetalert";
 import AddButton from "../components/AddButton";
 import DetailsModal from "../components/DetailsModal";
-import FormInput from "../components/FormInput";
 import { useState, useEffect } from "react";
 import { productsTypes } from "../TypescriptTypes/ProductTypes";
+import { productsFormTypes } from "../TypescriptTypes/ProductTypes";
+import { categoryIdType } from "../TypescriptTypes/ProductTypes";
+import productSchema from "../validations/productSchema";
 
 export default function Products() {
-  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
   const [allProduct, setAllProduct] = useState<productsTypes[]>([]);
+  const [categories, setCategories] = useState<categoryIdType[]>([]);
+  const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
+  const [productEditValue, setProductEditValue] = useState<productsTypes>();
+
+  const {
+    register: register1,
+    reset: reset1,
+    control: control1,
+    handleSubmit: handleSubmit1,
+    formState: { errors: errors1 },
+  } = useForm({
+    defaultValues: {
+      cover: "",
+      title: "",
+      price: "",
+      href: "",
+      categoryId: "",
+    },
+    resolver: yupResolver(productSchema),
+  });
+
+  const {
+    register: register2,
+    reset: reset2,
+    control: control2,
+    handleSubmit: handleSubmit2,
+    formState: { errors: errors2 },
+  } = useForm({
+    defaultValues: {
+      cover: productEditValue?.cover,
+      title: productEditValue?.title,
+      price:productEditValue?.price,
+      href: productEditValue?.href,
+      categoryId:""
+    },
+    resolver: yupResolver(productSchema),
+  });
+
+  const formSubmitting = (data: productsFormTypes, event: any) => {
+    event.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("cover", data.cover);
+    formData.append("title", data.title);
+    formData.append("price", data.price);
+    formData.append("href", data.href);
+    formData.append("categoryId", data.categoryId);
+
+    fetch("http://localhost:4000/v1/products", {
+      method: "POST",
+      body: formData,
+    }).then((res) => {
+      if (res.status === 201) {
+        res.json();
+        swal({
+          title: "محصول با موفقیت افزوده شد",
+          icon: "success",
+          buttons: "بستن" as any,
+        });
+        getProducts();
+        setToggleAddModal(false);
+      }
+    });
+
+    reset1();
+  };
+
+  const removeProductHandler = async (productID: string) => {
+    swal({
+      title: "آیا از حذف اطمینان دارید؟",
+      icon: "warning",
+      buttons: ["خیر", "بله"],
+    }).then(async (value) => {
+      if (value === true) {
+        const res = await fetch(
+          `http://localhost:4000/v1/products/${productID}`,
+          {
+            method: "DELETE",
+          },
+        );
+
+        if (res.status === 200) {
+          await res.json();
+          swal({
+            title: "محصول با موفقیت حذف شد",
+            icon: "success",
+            buttons: "بستن" as any,
+          });
+          getProducts();
+        }
+      }
+    });
+  };
+
+  const editProductHandler = (product: productsTypes) => {
+    setProductEditValue(product);
+    setToggleEditModal(true);
+  };
+
+  const editFormSubmiting = (data:productsFormTypes, event:any) => {
+
+    event.preventDefault()
+
+    let formData = new FormData();
+
+    formData.append("cover", data.cover);
+    formData.append("title", data.title);
+    formData.append("price", data.price);
+    formData.append("href", data.href);
+    formData.append("categoryId", data.categoryId);
+
+    fetch(`http://localhost:4000/v1/products/${productEditValue?._id}`, {
+      method: "PUT",
+      body: formData,
+    }).then((res) => {
+      if (res.status === 200) {
+        res.json();
+        swal({
+          title: "محصول با موفقیت ویرایش شد",
+          icon: "success",
+          buttons: "بستن" as any,
+        });
+        getProducts();
+        setToggleEditModal(false);
+      }
+    });
+
+    reset2();
+
+  }
+
+
 
   const openModalHandler = () => {
-    setToggleModal(true);
+    setToggleAddModal(true);
   };
 
   const closeModalHandler = () => {
-    setToggleModal(false);
+    setToggleAddModal(false);
   };
 
-  const getData = async () => {
+  const closeModalHandler2 = () => {
+    setToggleEditModal(false);
+  };
+
+  const getProducts = async () => {
     const res = await fetch("http://localhost:4000/v1/products");
     const data = await res.json();
     setAllProduct(data);
   };
 
+  const getCategory = async () => {
+    const res = await fetch("http://localhost:4000/v1/category");
+    const data = await res.json();
+    setCategories(data);
+  };
+
   useEffect(() => {
-    getData();
+    getProducts();
+    getCategory();
   }, []);
 
   return (
@@ -54,26 +202,26 @@ export default function Products() {
           <tbody>
             {allProduct?.map((product) => (
               <tr
-                key={product.id}
+                key={product._id}
                 className="border-b-[1.5px] border-zinc-200 text-center"
               >
                 <td>
                   <img
                     src={`http://localhost:4000/products/covers/${product.cover}`}
                     alt="product"
-                    className="mx-auto h-24 w-32"
+                    className="mx-auto h-24 w-32 "
                   />
                 </td>
-                <td >{product.title}</td>
+                <td>{product.title}</td>
                 <td>{Number(product.price)?.toLocaleString()} تومان </td>
                 <td>{product.categoryId.title}</td>
                 <td>
-                  <button className="">
+                  <button onClick={() => editProductHandler(product)}>
                     <MdEditSquare className="text-xl text-primary-p" />
                   </button>
                 </td>
                 <td>
-                  <button className="">
+                  <button onClick={() => removeProductHandler(product._id)}>
                     <RiDeleteBin6Fill className="text-xl text-primary-pk" />
                   </button>
                 </td>
@@ -82,34 +230,260 @@ export default function Products() {
           </tbody>
         </table>
       </div>
-      {toggleModal && (
+      {toggleAddModal && (
         <DetailsModal onClose={closeModalHandler}>
-          <h2 className="text-xl font-bold">مشخصات کاربر جدید</h2>
-          <form className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-            <FormInput typeInput="file" titleFa="تصویر" titleEn="img" />
-            <FormInput typeInput="text" titleFa="نام محصول" titleEn="product" />
-            <FormInput typeInput="text" titleFa="مبلغ" titleEn="price" />
-            <FormInput typeInput="text" titleFa="شورت نیم" titleEn="href" />
+          <h2 className="text-xl font-bold">مشخصات محصول جدید</h2>
+          <form
+            onSubmit={handleSubmit1(formSubmitting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+          >
+            <div className="flex flex-col gap-2">
+              <label htmlFor="cover" className="text-sm font-bold">
+                عکس
+              </label>
+              <Controller
+                control={control1}
+                name={"cover"}
+                render={({ field: { value, onChange, ...field } }) => {
+                  return (
+                    <input
+                      {...field}
+                      className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>,
+                      ) => {
+                        onChange(event.target.files?.[0]);
+                      }}
+                      type="file"
+                      id="cover"
+                    />
+                  );
+                }}
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.cover && errors1.cover.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="title" className="text-sm font-bold">
+                عنوان محصول
+              </label>
+              <input
+                id="title"
+                {...register1("title")}
+                type="text"
+                placeholder="title"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.title && errors1.title.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="price" className="text-sm font-bold">
+                قیمت
+              </label>
+              <input
+                id="price"
+                {...register1("price")}
+                type="text"
+                placeholder="price"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.price && errors1.price.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="href" className="text-sm font-bold">
+                شورت نیم
+              </label>
+              <input
+                id="href"
+                {...register1("href")}
+                type="text"
+                placeholder="shortName"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.href && errors1.href.message}
+              </span>
+            </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="category" className="text-sm font-bold ">
                 دسته بندی
               </label>
-              <select
-                id="category"
-                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
-              >
-                <option value="" className="bg-primary-p text-white">
-                  دسته بندی را انتخاب کنید
-                </option>
-                <option value="" className="bg-primary-p text-white">
-                  دیجیتال
-                </option>
-              </select>
+              <Controller
+                name="categoryId"
+                control={control1}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    id="category"
+                    className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+                  >
+                    <option value={"-1"} className="bg-primary-p text-white">
+                      دسته بندی را انتخاب کنید
+                    </option>
+                    {categories.map((category) => (
+                      <>
+                        <option
+                          key={category._id}
+                          value={category._id}
+                          className="bg-primary-p text-white"
+                        >
+                          {category.title}
+                        </option>
+                      </>
+                    ))}
+                  </select>
+                )}
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.categoryId && errors1.categoryId.message}
+              </span>
             </div>
+            <button
+              type="submit"
+              className="ms-auto mt-20 h-12 w-40 rounded-xl bg-primary-y"
+            >
+              تایید
+            </button>
           </form>
-          <button className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
-            تایید
-          </button>
+        </DetailsModal>
+      )}
+      {toggleEditModal && (
+        <DetailsModal onClose={closeModalHandler2}>
+          <h2 className="text-xl font-bold">ویرایش محصول</h2>
+          <form
+            onSubmit={handleSubmit2(editFormSubmiting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+          >
+            <div className="flex flex-col gap-2">
+              <label htmlFor="cover" className="text-sm font-bold">
+                عکس
+              </label>
+              <Controller
+                control={control2}
+                name={"cover"}
+                render={({ field: { value, onChange, ...field } }) => {
+                  return (
+                    <input
+                      {...field}
+                      className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>,
+                      ) => {
+                        onChange(event.target.files?.[0]);
+                      }}
+                      type="file"
+                      id="cover"
+                    />
+                  );
+                }}
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors2.cover && errors2.cover.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="title" className="text-sm font-bold">
+                عنوان محصول
+              </label>
+              <input
+                id="title"
+                defaultValue={productEditValue?.title}
+                {...register2("title")}
+                type="text"
+                placeholder="title"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors2.title && errors2.title.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="price" className="text-sm font-bold">
+                قیمت
+              </label>
+              <input
+              defaultValue={productEditValue?.price}
+                id="price"
+                {...register2("price")}
+                type="text"
+                placeholder="price"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors2.price && errors2.price.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="href" className="text-sm font-bold">
+                شورت نیم
+              </label>
+              <input
+              defaultValue={productEditValue?.href}
+                id="href"
+                {...register2("href")}
+                type="text"
+                placeholder="shortName"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors2.href && errors2.href.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="category" className="text-sm font-bold ">
+                دسته بندی
+              </label>
+              <Controller
+                name="categoryId"
+                control={control2}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    id="category"
+                    className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+                  >
+                    <option value={"-1"} className="bg-primary-p text-white">
+                      دسته بندی را انتخاب کنید
+                    </option>
+                    {categories.map((category) => (
+                      <>
+                        console.log(category.id)
+                        <option
+                          key={category._id}
+                          value={category._id}
+                          className="bg-primary-p text-white"
+                        >
+                          {category.title}
+                        </option>
+                      </>
+                    ))}
+                  </select>
+                )}
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors2.categoryId && errors2.categoryId.message}
+              </span>
+            </div>
+            <button
+              type="submit"
+              className="ms-auto mt-20 h-12 w-40 rounded-xl bg-primary-y"
+            >
+              تایید
+            </button>
+          </form>
         </DetailsModal>
       )}
     </div>

@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 
+.swal-footer{
+    text-align: center;
+}
+
+.swal-button{
+    background-color:#F84AD0;
+}
+
+.swal-button:not([disabled]):hover{
+    background-color:#F84AD0;
+}
+
+.swal-button--cancel{
+    background-color: #ffcd30;
+}
+
+.swal-button--cancel:not([disabled]):hover{
+    background-color: #ffcd30;
+}
+
 @layer base {
 
 

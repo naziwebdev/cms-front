@@ -1,5 +1,5 @@
 export interface productsTypes {
-  id: string;
+  _id: string;
   title: string;
   price: string;
   cover: string;
@@ -11,8 +11,16 @@ export interface productsTypes {
   __v: number;
 }
 
-interface categoryIdType {
-  id: string;
+export interface productsFormTypes {
+  title: string;
+  cover:any;
+  price: string;
+  href: string;
+  categoryId:string;
+}
+
+export interface categoryIdType {
+  _id: string;
   title: string;
   href: string;
   createdAt: string;
