@@ -45,9 +45,9 @@ export default function Products() {
     defaultValues: {
       cover: productEditValue?.cover,
       title: productEditValue?.title,
-      price:productEditValue?.price,
+      price: productEditValue?.price,
       href: productEditValue?.href,
-      categoryId:""
+      categoryId: "",
     },
     resolver: yupResolver(productSchema),
   });
@@ -114,9 +114,8 @@ export default function Products() {
     setToggleEditModal(true);
   };
 
-  const editFormSubmiting = (data:productsFormTypes, event:any) => {
-
-    event.preventDefault()
+  const editFormSubmiting = (data: productsFormTypes, event: any) => {
+    event.preventDefault();
 
     let formData = new FormData();
 
@@ -143,10 +142,7 @@ export default function Products() {
     });
 
     reset2();
-
-  }
-
-
+  };
 
   const openModalHandler = () => {
     setToggleAddModal(true);
@@ -413,7 +409,7 @@ export default function Products() {
                 قیمت
               </label>
               <input
-              defaultValue={productEditValue?.price}
+                defaultValue={productEditValue?.price}
                 id="price"
                 {...register2("price")}
                 type="text"
@@ -429,7 +425,7 @@ export default function Products() {
                 شورت نیم
               </label>
               <input
-              defaultValue={productEditValue?.href}
+                defaultValue={productEditValue?.href}
                 id="href"
                 {...register2("href")}
                 type="text"

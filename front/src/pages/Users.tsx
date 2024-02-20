@@ -4,19 +4,32 @@ import { MdAppBlocking } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
 
 import AddButton from "../components/AddButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DetailsModal from "../components/DetailsModal";
-import FormInput from "../components/FormInput";
+import { UsersTypes } from "../TypescriptTypes/UserTypes";
 
 export default function Users() {
-  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
+  const [allUser, setAllUser] = useState<UsersTypes[]>([]);
+
+  const getUsers = async () => {
+    const res = await fetch("http://localhost:4000/v1/users");
+    const data = await res.json();
+    setAllUser(data);
+  };
+
+  console.log(allUser);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   const openModalHandler = () => {
-    setToggleModal(true);
+    setToggleAddModal(true);
   };
 
   const closeModalHandler = () => {
-    setToggleModal(false);
+    setToggleAddModal(false);
   };
 
   return (
@@ -31,7 +44,7 @@ export default function Users() {
       xs:w-[calc(100vw-130px)]"
       >
         <h2 className="pb-4 text-xl ">کاربران</h2>
-        <table className="w-full text-sm md:text-base shadow-2xl">
+        <table className="w-full text-sm shadow-2xl md:text-base">
           <thead className="bg-pink-100">
             <tr className="border-b-[1.5px] border-zinc-200">
               <th className="min-w-[240px] py-3">کاربر</th>
@@ -45,216 +58,61 @@ export default function Users() {
             </tr>
           </thead>
           <tbody className="">
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className=" flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
+            {allUser?.map((user) => (
+              <tr
+                key={user?._id}
+                className="border-y-[10px] border-neutral-100 bg-white text-center"
+              >
+                <td className="p-1.5">
+                  <div className="flex items-center justify-around ">
+                    {user?.avatar ? (
+                      <img
+                        src={`http://localhost:4000/users/avatar/${user?.avatar}`}
+                        alt="avatar"
+                        className=" h-12 w-12 rounded-full"
+                      />
+                    ) : (
+                      <div className="flex justify-center items-center h-12 w-12 bg-lime-500 text-white font-semi-bold rounded-full">{user?.name.slice(0,2)}</div>
+                    )}
+
+                    <div className=" flex flex-col  gap-y-1.5 text-sm">
+                      <p>{user?.name}</p>
+                      <p className="text-sm text-zinc-500">{user?.email}</p>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
+                </td>
+                <td>
+                  {user?.username}
+                  <span className="font-bold text-violet-500">@</span>
+                </td>
+                <td>{user?.phone}</td>
+                <td>
+                  <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-sm font-semibold text-primary-pk">
+                    {user?.role === "ADMIN" ? "ادمین" : "کاربر"}
+                  </span>
+                </td>
+                <td>
+                  <button className="">
+                    <MdEditSquare className="text-xl text-primary-b" />
+                  </button>
+                </td>
+                <td>
+                  <button className="">
+                    <RiDeleteBin6Fill className="text-xl text-primary-pk" />
+                  </button>
+                </td>
+                <td>
+                  <button className="">
+                    <GrUserAdmin className="text-xl  text-primary-p" />
+                  </button>
+                </td>
+                <td>
+                  <button className="">
+                    <MdAppBlocking className="text-xl  text-primary-y" />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="fixed bottom-0 left-6 right-[6.8rem] z-10 flex justify-center gap-x-5 rounded-b-xl  p-5">
@@ -269,28 +127,10 @@ export default function Users() {
           </button>
         </div>
       </div>
-      {toggleModal && (
+      {toggleAddModal && (
         <DetailsModal onClose={closeModalHandler}>
           <h2 className="text-xl font-bold">مشخصات کاربر جدید</h2>
-          <form className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-            <FormInput
-              typeInput="text"
-              titleFa="نام و نام خانوادگی"
-              titleEn="name"
-            />
-            <FormInput
-              typeInput="text"
-              titleFa="نام کاربری"
-              titleEn="username"
-            />
-            <FormInput typeInput="email" titleFa="ایمیل" titleEn="email" />
-            <FormInput typeInput="text" titleFa="شماره تماس" titleEn="phone" />
-            <FormInput
-              typeInput="password"
-              titleFa="پسورد"
-              titleEn="password"
-            />
-          </form>
+
           <button className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
             تایید
           </button>
