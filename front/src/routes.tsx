@@ -16,7 +16,7 @@ import Calender from './pages/Apps/Calender'
 
 const routes = [
     { path: '/', element: <Home /> },
-    { path: '/users', element: <Users /> },
+    { path: '/users/:page', element: <Users /> },
     { path: '/products', element: <Products /> },
     { path: '/orders', element: <Orders /> },
     { path: '/category', element: <Category /> },

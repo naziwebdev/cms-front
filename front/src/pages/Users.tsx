@@ -7,10 +7,12 @@ import AddButton from "../components/AddButton";
 import { useState, useEffect } from "react";
 import DetailsModal from "../components/DetailsModal";
 import { UsersTypes } from "../TypescriptTypes/UserTypes";
+import Pagination from "../components/Pagination";
 
 export default function Users() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
   const [allUser, setAllUser] = useState<UsersTypes[]>([]);
+  const [usersShowPage,setUsersShowPage] = useState<UsersTypes[]>([])
 
   const getUsers = async () => {
     const res = await fetch("http://localhost:4000/v1/users");
@@ -33,7 +35,7 @@ export default function Users() {
   };
 
   return (
-    <div className=" xl:h-[calc(100vh-160px)]">
+    <div className="">
       <AddButton
         openModalHandler={openModalHandler}
         title={"افزودن کاربر جدید"}
@@ -41,7 +43,7 @@ export default function Users() {
 
       <div
         className="] w-[calc(100vw-90px)] overflow-x-auto bg-transparent
-      xs:w-[calc(100vw-130px)]"
+      xs:w-[calc(100vw-130px)] mt-10"
       >
         <h2 className="pb-4 text-xl ">کاربران</h2>
         <table className="w-full text-sm shadow-2xl md:text-base">
@@ -58,7 +60,7 @@ export default function Users() {
             </tr>
           </thead>
           <tbody className="">
-            {allUser?.map((user) => (
+            {usersShowPage?.map((user) => (
               <tr
                 key={user?._id}
                 className="border-y-[10px] border-neutral-100 bg-white text-center"
@@ -114,19 +116,10 @@ export default function Users() {
               </tr>
             ))}
           </tbody>
-        </table>
-        <div className="fixed bottom-0 left-6 right-[6.8rem] z-10 flex justify-center gap-x-5 rounded-b-xl  p-5">
-          <button className="flex w-10 items-center justify-center rounded-full bg-primary-y py-1 text-white hover:bg-black sm:w-16">
-            1
-          </button>
-          <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-            2
-          </button>
-          <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-            3
-          </button>
-        </div>
+        </table>  
       </div>
+      <Pagination items={allUser} itemsCount={4} 
+        pathname={'/users'}  setShowItems={setUsersShowPage} />
       {toggleAddModal && (
         <DetailsModal onClose={closeModalHandler}>
           <h2 className="text-xl font-bold">مشخصات کاربر جدید</h2>
