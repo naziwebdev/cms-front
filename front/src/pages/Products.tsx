@@ -18,6 +18,7 @@ export default function Products() {
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
   const [productEditValue, setProductEditValue] = useState<productsTypes>();
 
+
   const {
     register: register1,
     reset: reset1,
