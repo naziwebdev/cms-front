@@ -38,7 +38,7 @@ return (
 
               index + 1 === Number(page) ? (
 
-                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex justify-center items-center rounded-full bg-primary-pk hover:bg-black w-10 sm:w-16 py-1 text-white'>{index + 1}</Link>
+                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex justify-center items-center rounded-full bg-zinc-300 hover:bg-black w-10 sm:w-16 py-1 text-white'>{index + 1}</Link>
 
             ) : (
 
