@@ -258,7 +258,7 @@ export default function Users() {
       >
         <h2 className="pb-4 text-xl ">کاربران</h2>
         <table className="w-full text-sm shadow-2xl md:text-base">
-          <thead className="bg-pink-100">
+          <thead className="bg-stone-200">
             <tr className="border-b-[1.5px] border-zinc-200">
             <th className="max-w-[20px] py-3">#</th>
               <th className="min-w-[240px] py-3">کاربر</th>
@@ -286,7 +286,7 @@ export default function Users() {
                         className=" h-12 w-12 rounded-full"
                       />
                     ) : (
-                      <div className="font-semi-bold flex h-12 w-12 items-center justify-center rounded-full bg-zinc-300 text-white">
+                      <div className="font-semi-bold flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500 text-white">
                         {user?.name.slice(0, 2)}
                       </div>
                     )}

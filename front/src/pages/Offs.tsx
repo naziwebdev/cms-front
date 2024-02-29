@@ -1,6 +1,5 @@
 import DetailsModal from "../components/DetailsModal";
 import { IoMdAddCircle } from "react-icons/io";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";

@@ -206,7 +206,7 @@ export default function Products() {
                   <img
                     src={`http://localhost:4000/products/covers/${product.cover}`}
                     alt="product"
-                    className="mx-auto h-24 w-32 "
+                    className="mx-auto h-20 w-28 "
                   />
                 </td>
                 <td>{product.title}</td>
