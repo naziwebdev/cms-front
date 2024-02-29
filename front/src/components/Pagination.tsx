@@ -2,6 +2,8 @@ import { useState , useEffect } from 'react';
 import { UsersTypes } from '../TypescriptTypes/UserTypes'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { MdNavigateNext } from "react-icons/md";
+import { MdNavigateBefore } from "react-icons/md";
 
 type paginatinPropsTtpes = {
 
@@ -32,22 +34,27 @@ export default function Pagination({ items, itemsCount, pathname, setShowItems }
 
 return (
     <div className='flex justify-center pt-8'>
-    <ul className='flex justify-center gap-x-5'>
-
+    <ul className='flex justify-center gap-x-1'>
+    <button className="flex w-10 items-center justify-center rounded-xl bg-black py-1 text-white sm:w-14">
+           <MdNavigateNext className="text-2xl"/>
+            </button>
         {Array(pageCount).fill(0).map((btn, index) => (
 
               index + 1 === Number(page) ? (
 
-                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex justify-center items-center rounded-full bg-zinc-300 hover:bg-black w-10 sm:w-16 py-1 text-white'>{index + 1}</Link>
+                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex w-10 items-center justify-center rounded-xl bg-zinc-300 py-1 text-white hover:bg-black sm:w-14'>{index + 1}</Link>
 
             ) : (
 
-                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex justify-center items-center rounded-full bg-pink-200 hover:bg-black w-10 sm:w-16 py-1 text-white'>{index + 1}</Link>
+                <Link key={crypto.randomUUID()} to={`${pathname}/${index + 1}`} className='flex w-10 items-center justify-center rounded-xl bg-pink-200 py-1 text-white hover:bg-black sm:w-14'>{index + 1}</Link>
 
             )
 
 
         ))}
+         <button className="flex w-10 items-center justify-center rounded-xl bg-black py-1 text-white sm:w-14">
+            <MdNavigateBefore className="text-2xl"/>
+            </button>
     </ul>
 </div>
 )
