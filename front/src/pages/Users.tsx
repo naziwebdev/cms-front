@@ -286,7 +286,7 @@ export default function Users() {
                         className=" h-12 w-12 rounded-full"
                       />
                     ) : (
-                      <div className="font-semi-bold flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500 text-white">
+                      <div className="font-semi-bold flex h-12 w-12 items-center justify-center rounded-full bg-violet-500 text-white">
                         {user?.name.slice(0, 2)}
                       </div>
                     )}
@@ -298,9 +298,9 @@ export default function Users() {
                       <p className="text-sm text-zinc-500">{user?.email}</p>
                     </div>
                 </td>
-                <td>
+                <td className="font-semibold text-violet-500">
                   {user?.username}
-                  <span className="font-bold text-violet-500">@</span>
+                  <span className="font-semibold text-violet-500">@</span>
                 </td>
                 <td>{user?.phone}</td>
                 <td>

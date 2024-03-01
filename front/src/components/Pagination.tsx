@@ -36,7 +36,7 @@ export default function Pagination({
       <ul className="flex justify-center gap-x-1">
         <Link
           to={`${pathname}/${page > 1 ? Number(page) - 1 : 1}`}
-          className="flex w-10 items-center justify-center rounded-xl bg-zinc-700 py-1 text-white sm:w-14"
+          className="flex w-10 items-center justify-center rounded-xl bg-zinc-800 py-1 text-white sm:w-14"
         >
           <MdNavigateNext className="text-2xl" />
         </Link>
@@ -64,7 +64,7 @@ export default function Pagination({
           )}
         <Link
           to={`${pathname}/${page < pageCount! ? Number(page) + 1 : pageCount}`}
-          className="flex w-10 items-center justify-center rounded-xl bg-zinc-700 py-1 text-white sm:w-14"
+          className="flex w-10 items-center justify-center rounded-xl bg-zinc-800 py-1 text-white sm:w-14"
         >
           <MdNavigateBefore className="text-2xl" />
         </Link>

@@ -202,7 +202,7 @@ export default function Products() {
                 key={product._id}
                 className="border-b-[1.5px] border-zinc-200 text-center"
               >
-                <td>
+                <td className="py-1">
                   <img
                     src={`http://localhost:4000/products/covers/${product.cover}`}
                     alt="product"
@@ -214,12 +214,12 @@ export default function Products() {
                 <td>{product.categoryId.title}</td>
                 <td>
                   <button onClick={() => editProductHandler(product)}>
-                    <MdEditSquare className="text-xl text-primary-p" />
+                    <MdEditSquare className="text-xl text-indigo-400" />
                   </button>
                 </td>
                 <td>
                   <button onClick={() => removeProductHandler(product._id)}>
-                    <RiDeleteBin6Fill className="text-xl text-primary-pk" />
+                    <RiDeleteBin6Fill className="text-xl text-pink-500" />
                   </button>
                 </td>
               </tr>
