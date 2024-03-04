@@ -6,10 +6,10 @@ import { MdNavigateNext } from "react-icons/md";
 import { MdNavigateBefore } from "react-icons/md";
 
 type paginatinPropsTtpes = {
-  items: UsersTypes[];
+  items:object[];
   itemsCount: number;
   pathname: string;
-  setShowItems: (value: UsersTypes[]) => void;
+  setShowItems: (value:any) => void;
 };
 
 export default function Pagination({

@@ -65,7 +65,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'off' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('off')}>
-          <Link to={'/offs'} className="relative z-10 flex w-full gap-x-4 justify-start  text-2xl">
+          <Link to={'/offs/1'} className="relative z-10 flex w-full gap-x-4 justify-start  text-2xl">
             <span className=""><MdLocalOffer /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>تخفیف ها</span>
           </Link>

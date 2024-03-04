@@ -21,7 +21,7 @@ const routes = [
     { path: '/orders', element: <Orders /> },
     { path: '/category', element: <Category /> },
     { path: '/tickets', element: <Tickets /> },
-    { path: '/offs', element: <Offs /> },
+    { path: '/offs/:page', element: <Offs /> },
     { path: '/costs', element: <Costs /> },
     { path: '/comments', element: <Comments /> },
     {
