@@ -1,7 +1,5 @@
 import DetailsModal from "../components/DetailsModal";
 import { IoMdAddCircle } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
-import { MdNavigateBefore } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { MdEditSquare } from "react-icons/md";
 import { useState, useEffect } from "react";
@@ -85,6 +83,7 @@ export default function Offs() {
   const toggleEditModalHandler = () => {
     setToggleEditOffModal((prev) => !prev);
   };
+  
   const getOffs = async () => {
     const res = await fetch("http://localhost:4000/v1/offs", {
       headers: {
