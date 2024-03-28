@@ -23,7 +23,7 @@ const routes = [
     { path: '/tickets', element: <Tickets /> },
     { path: '/offs/:page', element: <Offs /> },
     { path: '/costs', element: <Costs /> },
-    { path: '/comments', element: <Comments /> },
+    { path: '/comments/:page', element: <Comments /> },
     {
         path: '/apps/*', element: <IndexApps />, children: [
 

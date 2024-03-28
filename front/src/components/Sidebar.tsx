@@ -83,7 +83,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'cm' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('cm')}>
-          <Link to={'/comments'} className="relative z-10 flex w-full gap-x-4  justify-start text-2xl">
+          <Link to={'/comments/1'} className="relative z-10 flex w-full gap-x-4  justify-start text-2xl">
             <span className=""><FaCommentDots /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>کامنت ها</span>
           </Link>

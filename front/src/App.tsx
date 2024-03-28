@@ -8,7 +8,7 @@ function App() {
   const router = useRoutes(routes)
 
   return (
-    <div className="h-dvh overflow-hidden flex justify-between p-1.5 xs:p-5 xs:gap-x-22 xl:gap-x-2.5">
+    <div className="h-dvh flex justify-between p-1.5 xs:p-5 xs:gap-x-22 xl:gap-x-2.5">
       <div className="w-[80px] ">
         <Sidebar />
       </div>

@@ -14,9 +14,9 @@ export default function TodoCard() {
 
   return (
     <div
-      className={`${doTask && "bg-indigo-300 line-through"} relative
+      className={`${doTask ? "bg-indigo-200 line-through" : 'bg-white'} relative
        flex flex-col xs:flex-row h-auto w-full xs:w-[90%]
-        xs:items-center justify-between rounded-3xl bg-white p-4 xs:px-6 shadow-xl 
+        xs:items-center justify-between rounded-3x p-4 xs:px-6 shadow-xl 
     md:w-[75%]`}
     >
       <div className="absolute top-0 right-0 h-full w-2 rounded-br-3xl rounded-tr-3xl bg-pink-600"></div>

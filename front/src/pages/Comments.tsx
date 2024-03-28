@@ -1,18 +1,34 @@
-import React from "react";
 import CommentCard from "../components/CommentCard";
-import AddButton from "../components/AddButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CommentTypes } from "../TypescriptTypes/CommentTpes";
+import Pagination from "../components/Pagination";
 
 export default function Comments() {
-  const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
+  const [allComments, setAllComments] = useState<CommentTypes[]>([]);
+  const [commentsShowPage, setCommentsShowPage] = useState<CommentTypes[]>([]);
 
-  const openModalHandler = () => {
-    setToggleAddModal(true);
+
+
+  const getComments = async () => {
+    const res = await fetch("http://localhost:4000/v1/comments", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+    if (res.status === 200) {
+      const data = await res.json();
+      setAllComments(data);
+    } else {
+      console.log(res);
+    }
   };
 
-  const closeModalHandler = () => {
-    setToggleAddModal(false);
-  };
+
+  useEffect(() => {
+    getComments()
+  },[])
+
 
   return (
     <div className="xl:h-[calc(100vh-160px)]">
@@ -20,25 +36,17 @@ export default function Comments() {
         className="h-[70vh] w-[calc(100vw-90px)] 
     rounded-xl  px-2 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
-        {/* <h1 className="px-4">لیست کامنت ها</h1> */}
         <div className="flex flex-col items-center gap-y-1 md:gap-y-6 2xl:gap-y-2 ">
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
+         {commentsShowPage?.map(comment => (
+          <CommentCard key={comment._id} comment={comment} setAllComments={setAllComments}/>
+         ))}
         </div>
-        <div className="flex justify-center pt-2.5 xs:pt-8  2xl:pt-8 ">
-          <ul className="flex justify-center gap-x-5 ">
-            <button className="flex w-10 items-center justify-center rounded-full bg-zinc-300 py-1 text-white hover:bg-black sm:w-16">
-             1
-            </button>
-            <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-             2
-            </button>
-            <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-             3
-            </button>
-          </ul>
-        </div>
+        <Pagination
+        items={allComments}
+        itemsCount={3}
+        pathname={"/comments"}
+        setShowItems={setCommentsShowPage}
+      />
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ export default function Pagination({
   useEffect(() => {
     let endIndex = itemsCount * page;
     let startIndex = endIndex - itemsCount;
-    let paginatedItems = items.slice(startIndex, endIndex);
+    let paginatedItems = items?.slice(startIndex,endIndex);
     setShowItems(paginatedItems);
 
     let pageNumbers = Math.ceil(items.length / itemsCount);
