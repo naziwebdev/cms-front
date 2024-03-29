@@ -311,13 +311,13 @@ export default function Users() {
                 <td>
                   <button>
                     <MdEditSquare onClick={() => editUserHandler(user)}
-                     className="text-xl text-primary-b" />
+                     className="text-xl text-indigo-500" />
                   </button>
                 </td>
                 <td>
                   <button>
                     <RiDeleteBin6Fill onClick={() => removeUserHandler(user._id)}
-                    className="text-xl text-primary-pk" />
+                    className="text-xl text-red-500" />
                   </button>
                 </td>
                 <td>

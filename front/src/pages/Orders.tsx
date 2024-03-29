@@ -340,7 +340,7 @@ export default function Orders() {
       )}
       {toggleEditModal && (
         <DetailsModal onClose={closeEditModal}>
-          <h2 className="text-xl font-bold">ایجاد سفارش جدید</h2>
+          <h2 className="text-xl font-bold">ویرایش سفارش </h2>
           <form
             onSubmit={handleSubmit2(formEditSubmitting)}
             className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "

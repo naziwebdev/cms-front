@@ -23,6 +23,21 @@
     background-color: #ffcd30;
 }
 
+.custom-input {
+    border-radius: 10px;
+    border-bottom: 2px #F84AD0 solid;
+    width: 100%;
+    padding:4px 16px;
+    background-color: white;
+    
+  }
+  
+  .custom-input:focus {
+    outline: none;
+    border: 1px solid #F84AD0;
+    box-shadow: 0 0 10px 2px #F84AD0;
+  }
+
 @layer base {
 
 
