@@ -155,6 +155,7 @@ export default function Products() {
 
   const closeModalHandler2 = () => {
     setToggleEditModal(false);
+    window.location.reload();
   };
 
   const getProducts = async () => {

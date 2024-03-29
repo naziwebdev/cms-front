@@ -78,6 +78,7 @@ export default function Offs() {
 
   const closeEditModal = () => {
     setToggleEditOffModal(false);
+    window.location.reload();
   };
 
   const toggleEditModalHandler = () => {

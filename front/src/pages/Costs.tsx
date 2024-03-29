@@ -57,7 +57,7 @@ export default function Costs() {
 
     setCostInfoEdit(costInfo)
     setToggleEditModal(true)
-    console.log(costInfoEdit)
+    
   }
 
   const openModalHandler = () => {

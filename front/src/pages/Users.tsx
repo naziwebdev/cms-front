@@ -243,6 +243,7 @@ export default function Users() {
 
   const closeModalHandler2 = () => {
     setToggleEditModal(false);
+    window.location.reload();
   };
 
   return (

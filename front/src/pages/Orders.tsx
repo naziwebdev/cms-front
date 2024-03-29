@@ -61,6 +61,7 @@ export default function Orders() {
 
   const closeEditModal = () => {
     setToggleEditModal(false);
+     window.location.reload();
   };
 
   const toggleEditModalHandler = () => {
@@ -400,7 +401,7 @@ export default function Orders() {
               <Controller
                 name="status"
                 control={control2}
-                defaultValue="در حال پردازش"
+                defaultValue={orderEditInfo?.status}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <select
