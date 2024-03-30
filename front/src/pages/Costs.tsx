@@ -109,6 +109,7 @@ export default function Costs() {
 
     reset1();
   };
+  
   const formEditSubmitting = async (data: CostFormTypes, event: any) => {
     event.preventDefault();
     const res = await fetch(`http://localhost:4000/v1/costs/${costInfoEdit?._id}`, {

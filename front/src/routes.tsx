@@ -27,7 +27,7 @@ const routes = [
     {
         path: '/apps/*', element: <IndexApps />, children: [
 
-            { path: 'todo', element: <Todo /> },
+            { path: 'todo/:page', element: <Todo /> },
             { path: 'note', element: <Note /> },
             { path: 'calender', element: <Calender /> }
         ]

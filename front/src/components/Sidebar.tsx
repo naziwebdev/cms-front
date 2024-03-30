@@ -110,7 +110,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'todo' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('todo')}>
-          <Link to={'/apps/todo'} className="relative z-10 flex w-full gap-x-4 justify-start text-2xl">
+          <Link to={'/apps/todo/1'} className="relative z-10 flex w-full gap-x-4 justify-start text-2xl">
             <span className=""><FaTasks /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>تودولیست</span>
           </Link>
