@@ -88,7 +88,7 @@ export default function Note() {
       />
       <div
         className="] h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
-    rounded-xl  bg-white  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
+    rounded-xl px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
         <h2 className=" text-xl ">یادداشت ها</h2>
         <div className="grid grid-cols-1 gap-5 pt-4 md:grid-cols-2 lg:grid-cols-3">

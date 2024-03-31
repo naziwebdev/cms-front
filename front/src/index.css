@@ -71,7 +71,8 @@
     }
 
     *::-webkit-scrollbar-track {
-        background: #d4d4d4;
+        /* background: #d4d4d4; */
+        /* background: #e9e8e8; */
         border-radius: 10px;
     }
 

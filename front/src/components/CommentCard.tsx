@@ -207,12 +207,12 @@ export default function CommentCard({
 
   return (
     <div
-      className={`relative h-auto w-[90%] rounded-3xl border-2 ${comment.isAccept === 1 ? "border-green-500" : "border-fuchsia-500"}  bg-white p-1.5 shadow-lg xs:p-2.5
+      className={`relative h-auto w-[90%] rounded-3xl border-2 ${comment.isAccept === 1 ? "border-green-400" : "border-fuchsia-500"}  bg-white p-1.5 shadow-lg xs:p-2.5
     md:w-[75%]`}
     >
       <div
         onClick={() => accepetCommetHandler(comment._id)}
-        className={`absolute -left-5 top-8 z-10 h-16 w-16 cursor-pointer rounded-full ${comment.isAccept === 1 ? "bg-green-500" : "bg-fuchsia-500"}  text-white sm:-left-12 sm:top-8 sm:h-24 sm:w-24`}
+        className={`absolute -left-5 top-8 z-10 h-16 w-16 cursor-pointer rounded-full ${comment.isAccept === 1 ? "bg-green-400" : "bg-fuchsia-500"}  text-white sm:-left-12 sm:top-8 sm:h-24 sm:w-24`}
       >
         <TiTick className="absolute left-2 top-1  text-[3rem] text-white sm:text-[5rem]" />
       </div>

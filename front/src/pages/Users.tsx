@@ -299,13 +299,13 @@ export default function Users() {
                       <p className="text-sm text-zinc-500">{user?.email}</p>
                     </div>
                 </td>
-                <td className="font-semibold text-violet-500">
+                <td className="font-semibold text-zinc-700">
                   {user?.username}
-                  <span className="font-semibold text-violet-500">@</span>
+                  <span className="font-semibold text-zinc-700">@</span>
                 </td>
                 <td>{user?.phone}</td>
                 <td>
-                  <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-sm font-semibold text-primary-pk">
+                  <span className="rounded-full bg-pink-100  px-6 py-1 text-sm font-semibold text-primary-pk">
                     {user?.role === "ADMIN" ? "ادمین" : "کاربر"}
                   </span>
                 </td>

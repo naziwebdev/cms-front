@@ -202,7 +202,7 @@ export default function Orders() {
       rounded-xl  bg-white  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
         <h1 className="px-4 pb-4 text-xl">لیست سفارشات</h1>
-        <table className="w-full border-separate border-spacing-[4px] border border-slate-300 md:text-base">
+        <table className="w-full  border border-slate-300 md:text-base">
           <thead className="bg-pink-50">
             <tr>
               <th className="min-w-[100px] border border-slate-300 py-2.5">
