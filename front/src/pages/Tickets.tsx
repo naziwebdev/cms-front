@@ -1,45 +1,113 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import TicketBox from "../components/TicketBox";
 import TicketChatBox from "../components/TicketChatBox";
+import { TicketTypes } from "../TypescriptTypes/TicketTypes";
+import { oneTicketTypes } from "../TypescriptTypes/TicketTypes";
+import InfoContext from "../context/InfoContext";
 
 export default function Tickets() {
-  const [btnActive, setBtnActive] = useState<string>("btn1");
+  const [btnActive, setBtnActive] = useState<string>("all");
+  const [allTicket, setAllTicket] = useState<TicketTypes[]>();
+  const [ticketID, setTicketID] = useState<string>("");
+  const [ticket, setTicket] = useState<oneTicketTypes>();
+
+  const getTickets = async () => {
+    const res = await fetch("http://localhost:4000/v1/tickets", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+    const tickets = await res.json();
+
+    setAllTicket(tickets);
+  };
+
+  useEffect(() => {
+    getTickets();
+  }, []);
+
+  const getOneTicket = async () => {
+    const res = await fetch(
+      `http://localhost:4000/v1/tickets/${ticketID}/answer`,
+      {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+        },
+      },
+    );
+    const oneTicket = await res.json();
+    setTicket(oneTicket);
+  };
+
+  console.log(ticket)
+
   return (
-    <div className="mt-2  flex flex-col sm:flex-row gap-y-6 w-[calc(100vw-90px)]  justify-between gap-x-2 xs:w-[calc(100vw-130px)] lg:gap-x-5 ">
-      <div className="mb-5 order-1 sm:order-none w-full sm:w-[50%] rounded-xl bg-white shadow-lg lg:w-[68%]">
-        <TicketChatBox/>
-      </div>
-      <div className="w-full sm:w-[50%] lg:w-[32%]">
-        <h2 className=" text-xl font-semibold">تیکت ها</h2>
-        <p className="flex items-center gap-x-2 pt-3">
-          <FaSortAmountDownAlt className="text-primary-pk" />
-          فیلتر بر اساس
-        </p>
-        <div className="text-sm md:text-base mt-2.5 flex items-center justify-center rounded-2xl border-[1px] border-pink-200 bg-white p-3.5  font-semibold text-stone-500 shadow-lg">
-          <button
-            onClick={() => setBtnActive("btn1")}
-            className={`px-4 md:px-8 ${btnActive === "btn1" && "text-primary-pk"}`}
-          >
-            پاسخ داده شده
-          </button>
-          <button
-            onClick={() => setBtnActive("btn2")}
-            className={`border-s-2 border-primary-pk px-4 md:px-8 ${btnActive === "btn2" && "text-primary-pk"}`}
-          >
-            پاسخ داده نشده
-          </button>
+    <InfoContext.Provider value={{ ticketID, getOneTicket , ticket}}>
+      <div className="mt-2  flex w-[calc(100vw-90px)] flex-col justify-between gap-x-2  gap-y-6 xs:w-[calc(100vw-130px)] sm:flex-row lg:gap-x-5 ">
+        <div className="order-1 mb-5 w-full rounded-xl bg-white shadow-lg sm:order-none sm:w-[50%] lg:w-[68%]">
+          <TicketChatBox />
         </div>
-        <div className="mt-4 xs:mt-8 flex h-[32vh] sm:h-[50vh] flex-col gap-y-2 overflow-y-auto">
-          <TicketBox />
-          <TicketBox />
-          <TicketBox />
-          <TicketBox />
-          <TicketBox />
-          <TicketBox />
-          <TicketBox />
+        <div className="w-full sm:w-[50%] lg:w-[32%]">
+          <h2 className=" text-xl font-semibold">تیکت ها</h2>
+          <p className="flex items-center gap-x-2 pt-3">
+            <FaSortAmountDownAlt className="text-primary-pk" />
+            فیلتر بر اساس
+          </p>
+          <div className="mt-2.5 flex items-center justify-center rounded-2xl border-[1px] border-pink-200 bg-white p-3.5 text-xs font-semibold  text-stone-500 shadow-lg xs:text-sm">
+            <button
+              onClick={() => setBtnActive("all")}
+              className={`px-4 md:px-8 ${btnActive === "all" && "text-primary-pk"}`}
+            >
+              همه
+            </button>
+            <button
+              onClick={() => setBtnActive("btn1")}
+              className={`border-s-2 border-primary-pk px-4 md:px-8 ${btnActive === "btn1" && "text-primary-pk"}`}
+            >
+              پاسخ داده شده
+            </button>
+            <button
+              onClick={() => setBtnActive("btn2")}
+              className={`border-s-2 border-primary-pk px-4 md:px-8 ${btnActive === "btn2" && "text-primary-pk"}`}
+            >
+              پاسخ داده نشده
+            </button>
+          </div>
+          <div className="mt-4 flex h-[32vh] flex-col gap-y-2 overflow-y-auto xs:mt-8 sm:h-[50vh]">
+            {btnActive === "all" &&
+              allTicket?.map((ticket) => (
+                <TicketBox
+                  key={ticket._id}
+                  data={ticket}
+                  setTicketID={setTicketID}
+                />
+              ))}
+            {btnActive === "btn1" &&
+              allTicket
+                ?.filter((ticket) => ticket.answer === 1)
+                .map((item) => (
+                  <TicketBox
+                    key={item._id}
+                    data={item}
+                    setTicketID={setTicketID}
+                  />
+                ))}
+            {btnActive === "btn2" &&
+              allTicket
+                ?.filter((ticket) => ticket.answer === 0)
+                .map((item) => (
+                  <TicketBox
+                    key={item._id}
+                    data={item}
+                    setTicketID={setTicketID}
+                  />
+                ))}
+          </div>
         </div>
       </div>
-    </div>
+    </InfoContext.Provider>
   );
 }

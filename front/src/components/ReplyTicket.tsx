@@ -1,9 +1,16 @@
 
-export default function ReplyTicket() {
+type ReplyTicketType ={
+  body:string;
+  updatedAt:string
+
+}
+
+export default function ReplyTicket({body,updatedAt}:ReplyTicketType) {
+
   return (
-    <div className="self-end inline-block rounded-xl rounded-tl-none bg-primary-p p-2.5 text-white shadow-md">
-      <p className="text-xs xs:text-sm">سلام این نتن فقط برای تست هست</p>
-      <span className="text-xs">1402/1/3 12:11</span>
+    <div className="self-end inline-block rounded-xl rounded-bl-3xl rounded-tl-none bg-primary-p p-2.5 text-white shadow-md">
+      <p className="text-xs xs:text-sm">{body}</p>
+      <span className="text-xs">{updatedAt}</span>
     </div>
   );
 }
