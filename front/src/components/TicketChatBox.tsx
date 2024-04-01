@@ -46,7 +46,7 @@ export default function TicketChatBox() {
 
   return (
     <>
-      <div className="flex items-center justify-between p-3 shadow-md shadow-zinc-100">
+      <div className="flex items-center justify-between p-2 shadow-md shadow-zinc-100">
         <div className="flex gap-x-3">
           {ticketContext.ticket?.ticket.user.avatar ? (
             <img
@@ -93,7 +93,8 @@ export default function TicketChatBox() {
           <textarea
             value={ticketAnswerBody}
             onChange={(event) => setTicketAnswerBody(event.target.value)}
-            className=" w-full resize-none border-none bg-transparent pt-4 text-primary-pk outline-none placeholder:text-xs"
+            className=" w-full resize-none border-none bg-transparent pt-4 text-primary-pk outline-none placeholder:text-xs
+            md:placeholder:text-base"
             placeholder="پیام خود را بنویسید ..."
           ></textarea>
         </div>

@@ -230,7 +230,7 @@ export default function Costs() {
                 className="border-b-2 border-zinc-200 py-4 text-start"
               >
                 <td className="px-8 py-2.5">
-                  <p className="text-zinc-600">{cost._id.slice(0, 7)}</p>
+                  <p className="text-primary-p">{cost._id.slice(0, 7)}</p>
                   <p className="py-1.5 font-semibold text-zinc-700">
                     {cost.title}
                   </p>

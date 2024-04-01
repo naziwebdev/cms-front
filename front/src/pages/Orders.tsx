@@ -203,7 +203,7 @@ export default function Orders() {
       >
         <h1 className="px-4 pb-4 text-xl">لیست سفارشات</h1>
         <table className="w-full  border border-slate-300 md:text-base">
-          <thead className="bg-pink-50">
+          <thead className="bg-zinc-100">
             <tr>
               <th className="min-w-[100px] border border-slate-300 py-2.5">
                 تصویر
