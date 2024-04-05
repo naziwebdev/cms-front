@@ -24,7 +24,6 @@ type TodoPropsTypes = {
 };
 
 export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
-  // const [doTask, setDoTask] = useState<boolean>(false);
   const [toggleActions, setToggleActions] = useState<boolean>(false);
   const [todoInfoEdit, setTodoInfoEdit] = useState<TodoTypes>();
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);

@@ -42,7 +42,6 @@ export default function Tickets() {
     setTicket(oneTicket);
   };
 
-  console.log(ticket)
 
   return (
     <InfoContext.Provider value={{ ticketID, getOneTicket , ticket}}>

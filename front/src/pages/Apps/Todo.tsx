@@ -9,7 +9,6 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/purple.css";
-import type { Value } from "react-multi-date-picker";
 import swal from "sweetalert";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,7 +18,7 @@ export default function Todo() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
   const [allTodo, setAllTodo] = useState<TodoTypes[]>([]);
   const [todoShowPage, setTodoShowPage] = useState<TodoTypes[]>([]);
-  const [dateValue, setDateValue] = useState<Value>(new Date());
+ 
 
   const {
     register: register1,
@@ -30,14 +29,13 @@ export default function Todo() {
   } = useForm({
     defaultValues: {
       title: "",
-      date: dateValue?.toLocaleString("fa-IR") as Value,
+      date:""
     },
     resolver: yupResolver(TodoSchema) as any,
   });
 
   const formSubmitting = async (data: TodoFormTypes, event: any) => {
     event.preventDefault();
-    setDateValue(data.date);
     const res = await fetch("http://localhost:4000/v1/todos", {
       method: "POST",
       headers: {
@@ -154,6 +152,7 @@ export default function Todo() {
                     <DatePicker
                       inputClass="custom-input"
                       className="purple"
+                      placeholder="برای انتخاب تاریخ ضربه بزنید"
                       value={value || ""}
                       onChange={(date) => {
                         onChange(date);

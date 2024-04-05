@@ -10,14 +10,12 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/purple.css";
-import type { Value } from "react-multi-date-picker";
 import swal from "sweetalert";
 
 export default function Costs() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
   const [allCost, setAllCost] = useState<CostTypes[]>();
-  const [dateValue, setDateValue] = useState<Value>(new Date());
   const [costInfoEdit,setCostInfoEdit] = useState<CostTypes>()
 
   const {
@@ -30,7 +28,7 @@ export default function Costs() {
     defaultValues: {
       title: "",
       status: "",
-      date: dateValue?.toLocaleString("fa-IR") as Value,
+      date:"",
       price: "",
     },
     resolver: yupResolver(CostSchema) as any,
@@ -75,7 +73,6 @@ export default function Costs() {
 
   const formSubmitting = async (data: CostFormTypes, event: any) => {
     event.preventDefault();
-    setDateValue(data.date);
     const res = await fetch("http://localhost:4000/v1/costs", {
       method: "POST",
       headers: {
@@ -314,6 +311,7 @@ export default function Costs() {
                     <DatePicker
                       inputClass="custom-input"
                       className="purple"
+                      placeholder="برای انتخاب تاریخ ضربه بزنید"
                       value={value || ""}
                       onChange={(date) => {
                         onChange(date);

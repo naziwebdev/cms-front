@@ -1,4 +1,4 @@
-import type{Value} from "react-multi-date-picker"
+
 
 export interface TodoTypes {
     _id:string,
@@ -14,5 +14,5 @@ export interface TodoTypes {
 
 export interface TodoFormTypes {
     title:string;
-    date:Value;
+    date:string;
 }
