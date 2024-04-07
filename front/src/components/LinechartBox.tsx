@@ -24,11 +24,11 @@ type ChartBoxProp = {
 
 export default function ChartBox({ bgColor , title , data}: ChartBoxProp) {
   return (
-    <div className={`${bgColor} w-full rounded-[4rem] p-5 shadow-xl shadow-zinc-400`}>
+    <div className={`${bgColor} w-full rounded-[3rem] p-5 shadow-xl shadow-zinc-400`}>
       <h2 className="ps-6 pt-0 2xs:pt-2 text-base 2xs:text-lg font-semibold text-white">
         {title}
       </h2>
-      <ResponsiveContainer width="95%"    height={90}>
+      <ResponsiveContainer width="100%"    height={90}>
         <LineChart data={data}>
           <Line
             type="monotone"
