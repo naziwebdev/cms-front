@@ -1,5 +1,5 @@
 
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid,ResponsiveContainer } from "recharts";
+import { BarChart, Bar, Cell, XAxis, YAxis,ResponsiveContainer } from "recharts";
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink" , 
 '#a3e635','black','#38bdf8','#d946ef','#581c87','#d4d4d8'];
