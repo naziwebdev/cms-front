@@ -1,13 +1,15 @@
-
+import LinechartBox from "../components/LinechartBox"
+import { data1,data2,data3,data4 } from "../LinechartDatas";
 export default function Home() {
   return (
-    <>
-    home
-      {/* <div className="w-48 h-40 bg-purple text-primary mb-5"></div>
-      <div className="w-48 h-40 bg-yellow mb-5"></div>
-      <div className="w-48 h-40 bg-pink mb-5"></div>
-      <div className="w-48 h-40 bg-blue mb-5"></div> */}
-    </>
-  )
+    <div className="w-[calc(100vw-90px)] 
+     px-2 xs:w-[calc(100vw-130px)] xs:p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 items-center justify-center gap-5">
+        <LinechartBox bgColor='bg-primary-p' title='تعداد کاربران' data={data1}/>      
+        <LinechartBox bgColor='bg-primary-pk' title='تعداد محصولات' data={data2}/>      
+        <LinechartBox bgColor='bg-primary-y' title='فروش کل' data={data3}/>      
+        <LinechartBox bgColor='bg-primary-b' title='هزینه کل' data={data4}/>      
+      </div>
+    </div>
+  );
 }
-
