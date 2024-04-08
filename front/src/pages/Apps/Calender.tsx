@@ -283,7 +283,10 @@ export default function Calender() {
   rounded-xl  px-2 xs:w-[calc(100vw-130px)] xs:p-4"
       >
         <div className="flex flex-col gap-x-5 gap-y-8 md:flex-row lg:gap-x-14">
-          <TodayEventsBox />
+          <div className="w-full md:w-1/2 lg:w-1/3">
+            <TodayEventsBox />
+          </div>
+          
           <div className="flex-1">
             <Calendar
               mapDays={({ date }) => {

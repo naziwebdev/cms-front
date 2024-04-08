@@ -11,6 +11,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/purple.css";
 import WeatherBox from "../components/WeatherBox";
+import TodayEventsBox from "../components/TodayEventsBox";
 
 export default function Home() {
   return (
@@ -51,14 +52,17 @@ export default function Home() {
         <OrderTable />
       </div>
       <div className="mt-16 grid grid-cols-1 items-center gap-5 md:grid-cols-2 lg:gap-x-5 xl:grid-cols-4">
-       <Calendar
-          className="purple w-full  bg-fuchsia-300  shadow-xl shadow-zinc-400"
-          calendar={persian}
-          locale={persian_fa}
-        />  
-        <TodoListBox />
-        <WeatherBox/>
-      </div>
+        <Calendar
+        className="purple w-full  bg-fuchsia-300  shadow-xl shadow-zinc-400"
+        calendar={persian}
+        locale={persian_fa}
+      />  
+      <TodoListBox />
+     
+      <WeatherBox/>
+      <TodayEventsBox />
+     
+    </div>
     </div>
   );
 }

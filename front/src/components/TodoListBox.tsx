@@ -108,7 +108,7 @@ export default function TodoListBox() {
 
   return (
     <div className=" shadow-xl shadow-zinc-300">
-      <div className="rounded-t-lg bg-fuchsia-400 p-3 text-center text-xl font-semibold text-white">
+      <div className="rounded-t-lg bg-fuchsia-300 p-3 text-center text-xl font-semibold text-white">
         تودو لیست
       </div>
       <div className="flex h-[350px] flex-col items-center overflow-y-auto bg-white  p-3 xs:p-5">

@@ -2,6 +2,7 @@ import { FaRegCalendar } from "react-icons/fa";
 import { EventTypes } from "../TypescriptTypes/EventTypes";
 import { useState, useEffect } from "react";
 
+
 export default function TodayEventsBox() {
   const [todayEvents, setTodayEvents] = useState<EventTypes[]>();
 
@@ -58,7 +59,7 @@ export default function TodayEventsBox() {
  
 
   return (
-    <div className="flex w-full flex-col rounded-3xl rounded-b-none  bg-fuchsia-300 p-6 text-white shadow-xl shadow-zinc-400 md:w-1/2 lg:w-1/3">
+    <div className={`flex w-full flex-col overflow-y-auto rounded-3xl rounded-b-none h-[400px] bg-fuchsia-300 p-6 text-white shadow-xl shadow-zinc-400`}>
       <div className="flex flex-col items-center">
         <h2 className="text-[3.5rem] font-bold">{nowFa.split("/")[2]}</h2>
         <p className="flex items-center gap-x-2 tracking-widest">

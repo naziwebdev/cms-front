@@ -38,15 +38,16 @@
     box-shadow: 0 0 10px 2px #F84AD0;
   }
 
-  .rmdp-wrapper{
+ .rmdp-wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 30px;
     height: 400px;
-    background-image:linear-gradient(to top , rgba(170, 168, 168, 0.203) , rgba(255, 255, 255, 0.199)),url(/images/2b14c0c293dfd726b35cd253d0cdcd4d.jpg);
+     background-image:linear-gradient(to top , rgba(170, 168, 168, 0.203) , rgba(255, 255, 255, 0.199)),url(/images/2b14c0c293dfd726b35cd253d0cdcd4d.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+
   }
 
 
