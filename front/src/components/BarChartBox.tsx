@@ -98,7 +98,7 @@ export default function BarChartBox() {
       <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold text-stone-700">
         فروش ماهانه :
       </h2>
-      <ResponsiveContainer width="107%" height={400}>
+      <ResponsiveContainer width="112%" height={400}>
         <BarChart
           data={data}    
         >

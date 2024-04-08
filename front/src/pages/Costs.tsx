@@ -209,7 +209,7 @@ export default function Costs() {
       />
       <div
         className="] h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
-    rounded-xl  bg-white  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
+    rounded-xl  bg-white shadow-lg shadow-zinc-200 px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
         <h1 className="px-4 pb-4 text-xl">لیست هزینه ها</h1>
         <table className="w-full text-sm md:text-base">

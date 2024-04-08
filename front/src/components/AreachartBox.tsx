@@ -98,7 +98,7 @@ export default function AreachartBox() {
             <p className="">درامد</p>
         </li>
       </ul>
-      <ResponsiveContainer width="107%" height={400}>
+      <ResponsiveContainer width="112%" height={400}>
         <AreaChart
           data={data}  
         >

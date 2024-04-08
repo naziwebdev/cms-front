@@ -182,7 +182,7 @@ export default function Products() {
         title={"افزودن محصول جدید"}
       />
       <div
-        className="border-zinc-300/3 h-[70vh]  w-[calc(100vw-90px)] overflow-x-auto rounded-2xl border-2 bg-white shadow-xl xs:w-[calc(100vw-130px)] 
+        className="border-zinc-300/3 h-[70vh]  w-[calc(100vw-90px)] overflow-x-auto rounded-2xl border-2 bg-white shadow-lg shadow-zinc-300 xs:w-[calc(100vw-130px)] 
       xl:h-[64vh]"
       >
         <h2 className="p-2 px-4 text-lg ">محصولات</h2>
