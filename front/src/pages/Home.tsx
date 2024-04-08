@@ -5,6 +5,7 @@ import PiechartBox from "../components/PiechartBox";
 import AreachartBox from "../components/AreachartBox";
 import CommentScoreBox from "../components/CommentScoreBox";
 import OrderTable from "../components/OrderTable";
+import TodoListBox from "../components/TodoListBox";
 
 
 export default function Home() {
@@ -31,7 +32,7 @@ export default function Home() {
         <BarChartBox />
         <PiechartBox />
       </div>
-      <div className="ga-x-12 mt-16 grid grid-cols-1 gap-5 items-center md:grid-cols-2 lg:gap-x-24">
+      <div className=" mt-16 grid grid-cols-1 gap-5 items-center md:grid-cols-2 lg:gap-x-24">
       <AreachartBox/>
       <CommentScoreBox/>
       </div>
@@ -40,6 +41,9 @@ export default function Home() {
        xs:w-[calc(100vw-130px)] ">
         <h2 className="pb-4 px-4 font-semibold text-stone-700">لیست سفارش ها</h2>
         <OrderTable />
+      </div>
+      <div className="mt-16 grid grid-cols-1 gap-5 items-center md:grid-cols-2 xl:grid-cols-4 lg:gap-x-5">
+       <TodoListBox/>
       </div>
     </div>
   );
