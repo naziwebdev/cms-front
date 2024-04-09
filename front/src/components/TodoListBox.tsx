@@ -111,7 +111,7 @@ export default function TodoListBox() {
       <div className="rounded-t-lg bg-fuchsia-300 p-3 text-center text-xl font-semibold text-white">
         تودو لیست
       </div>
-      <div className="flex h-[350px] flex-col items-center overflow-y-auto bg-white  p-3 xs:p-5">
+      <div className="flex bg-todo h-[350px] flex-col items-center overflow-y-auto bg-white  p-3 xs:p-5">
         <div className="w-full flex">
           <input
             type="text"
@@ -139,7 +139,7 @@ export default function TodoListBox() {
             <TiTick className="absolute top-0 left-0 text-2xl text-primary-b" />
           )}
               </span>
-              <p className="text-zinc-700 ">{todo.title}</p>
+              <p className="text-white">{todo.title}</p>
             </li>
           ))}
         </ul>

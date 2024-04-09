@@ -55,6 +55,15 @@
     background-color: #97c197;
 }
 
+
+#ir-30 , #ir-14 , #ir-16 , #ir-22 , #ir-03 , #ir-05{
+    fill:#ffcd30;
+  }
+
+#ir-29 , #ir-17  , #ir-23 {
+    fill:#F84AD0;
+  }
+
 @layer base {
 
 
@@ -249,6 +258,15 @@
         background-image:linear-gradient(to top , #8c1cc44c , #9862c7a9 ),
         url(/images/mountain_landscape9_generated.jpg);
         filter: contrast(130%) hue-rotate(730deg) saturate(150%);
+
+    }
+
+    .bg-todo{
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position:60% 90%;
+        background-image:linear-gradient(to top , #8c1cc44c , #ffffff5f ),
+        url(/images/teahub.io-abstract-nature-wallpaper-2362770.jpg);
 
     }
 
