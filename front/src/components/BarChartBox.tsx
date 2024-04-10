@@ -1,83 +1,15 @@
 
 import { BarChart, Bar, Cell, XAxis, YAxis,ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
 
-const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink" , 
-'#a3e635','black','#38bdf8','#d946ef','#581c87','#d4d4d8'];
+const colors = [ "pink",'#581c87','#a3e635', "#0088FE", "#00C49F", "#FF8042", "red"  
+,'black','#38bdf8','#d946ef','#d4d4d8'];
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Page H",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page I",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page J",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page K",
-    uv: 500,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page L",
-    uv: 3590,
-    pv: 4320,
-    amt: 2100,
-  },
-];
+
+type barchartData = {
+  numberofdocuments: number;
+  month: string;
+};
 
 const getPath = (x: number, y: number, width: number, height: number) => {
   return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
@@ -93,6 +25,31 @@ const TriangleBar = (props: any) => {
 };
 
 export default function BarChartBox() {
+  const [barchartData, setBarchartData] = useState<barchartData[]>(
+    [],
+  );
+
+  const getBarchartData = async () => {
+    const res = await fetch("http://localhost:4000/v1/orders/report", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setBarchartData(data);
+    }
+  };
+
+
+  useEffect(() => {
+   getBarchartData()
+  },[])
+
+
+
   return (
     <div className="">
       <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold text-stone-700">
@@ -100,17 +57,17 @@ export default function BarChartBox() {
       </h2>
       <ResponsiveContainer width="112%" height={400}>
         <BarChart
-          data={data}    
+          data={barchartData}    
         >
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Bar
-            dataKey="uv"
+            dataKey="totalAmount"
             fill="#8884d8"
             shape={<TriangleBar />}
             label={{ position: "top" }}
           >
-            {data.map((entry, index) => (
+            {barchartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % 20]} />
             ))}
           </Bar>

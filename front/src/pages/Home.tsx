@@ -184,7 +184,7 @@ export default function Home() {
 
             <div className="flex items-center gap-x-2">
               <span className="h-6 w-6  rounded-md bg-primary-pk"></span>
-              پراکندگی خریداران
+              پراکندگی کاربران
             </div>
           </div>
           <div className="mt-5 flex flex-col items-center justify-around gap-y-4 2xs:flex-row">
