@@ -1,5 +1,4 @@
 import LinechartBox from "../components/LinechartBox";
-import { data1, data2, data3, data4 } from "../LinechartDatas";
 import BarChartBox from "../components/BarChartBox";
 import PiechartBox from "../components/PiechartBox";
 import AreachartBox from "../components/AreachartBox";
@@ -15,8 +14,90 @@ import TodayEventsBox from "../components/TodayEventsBox";
 import UserTable from "../components/UserTable";
 import { VectorMap } from "@south-paw/react-vector-maps";
 import iranMap from "../iran.svg.json";
+import { useState, useEffect } from "react";
+
+type linechartData = {
+  numberofdocuments: number;
+  month: string;
+};
 
 export default function Home() {
+  const [userLinechartData, setUserLinechartData] = useState<linechartData[]>(
+    [],
+  );
+  const [productLinechartData, setProductLinechartData] = useState<linechartData[]>(
+    [],
+  );
+  const [saleLinechartData, setSaleLinechartData] = useState<linechartData[]>(
+    [],
+  );
+  const [costLinechartData, setCostLinechartData] = useState<linechartData[]>(
+    [],
+  );
+
+  const getLinechartDataUser = async () => {
+    const res = await fetch("http://localhost:4000/v1/users/report", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setUserLinechartData(data);
+    }
+  };
+
+  const getLinechartDataSale = async () => {
+    const res = await fetch("http://localhost:4000/v1/orders/report", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setSaleLinechartData(data);
+    }
+  };
+
+  const getLinechartDataCost = async () => {
+    const res = await fetch("http://localhost:4000/v1/costs/report", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setCostLinechartData(data);
+    }
+  };
+  const getLinechartDataProduct = async () => {
+    const res = await fetch("http://localhost:4000/v1/products/report", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setProductLinechartData(data);
+    }
+  };
+
+  useEffect(() => {
+    getLinechartDataUser()
+    getLinechartDataProduct()
+    getLinechartDataSale()
+    getLinechartDataCost()
+  },[])
+
+
   return (
     <div
       className="w-[calc(100vw-90px)] 
@@ -26,15 +107,15 @@ export default function Home() {
         <LinechartBox
           bgColor="bg-primary-p"
           title="تعداد کاربران"
-          data={data1}
+          data={userLinechartData}
         />
-        <LinechartBox
+         <LinechartBox
           bgColor="bg-primary-pk"
           title="تعداد محصولات"
-          data={data2}
-        />
-        <LinechartBox bgColor="bg-primary-y" title="فروش کل" data={data3} />
-        <LinechartBox bgColor="bg-primary-b" title="هزینه کل" data={data4} />
+          data={productLinechartData}
+        /> 
+         <LinechartBox bgColor="bg-primary-y" title="فروش کل" data={saleLinechartData} />
+        <LinechartBox bgColor="bg-primary-b" title="هزینه کل" data={costLinechartData} />  
       </div>
       <div className="ga-x-12 mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-x-24">
         <BarChartBox />

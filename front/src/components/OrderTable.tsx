@@ -155,14 +155,14 @@ export default function OrderTable() {
             <tr key={order._id} className="text-center">
               <td className=" py-1">
                 <img
-                  src={`http://localhost:4000/products/covers/${order.product.cover}`}
+                  src={`http://localhost:4000/products/covers/${order?.product?.cover}`}
                   alt="product"
                   className="mx-auto h-20 w-24"
                 />
               </td>
-              <td className="">{order.product.title}</td>
-              <td className="">{order.price.toLocaleString()} تومان </td>
-              <td className="">{order.user?.name}</td>
+              <td className="">{order?.product?.title}</td>
+              <td className="">{order?.price.toLocaleString()} تومان </td>
+              <td className="">{order?.user?.name}</td>
               <td className="">
                 {new Date(order.createdAt).toLocaleDateString("fa-IR", {
                   year: "numeric",

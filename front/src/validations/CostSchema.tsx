@@ -7,7 +7,7 @@ const CostSchema = Yup.object().shape({
     .max(30, "نام محصول حداکثر باید ۱۲ کارکتر باشد"),
   status: Yup.string().required("وضعیت هزینه را وارد کنید"),
   date: Yup.string().required("تاریخ را انتخاب کنید"),
-  price: Yup.string().required("قیمت را وارد کنید"),
+  price: Yup.number().required("قیمت را وارد کنید"),
 });
 
 export default CostSchema;

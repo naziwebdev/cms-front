@@ -1,10 +1,8 @@
 import AddButton from "../components/AddButton";
-import { useState, useEffect } from "react";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { MdEditSquare } from "react-icons/md";
+import { useState} from "react";
 import DetailsModal from "../components/DetailsModal";
 import { OrderTypes, orderFormTypes } from "../TypescriptTypes/OrderTypes";
-import { useForm, Controller } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
@@ -89,7 +87,7 @@ export default function Orders() {
         />
    
       <div
-        className="] h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
+        className="h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
       rounded-xl  bg-white shadow-lg shadow-zinc-300  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
         <h1 className="px-4 pb-4 text-xl">لیست سفارشات</h1>

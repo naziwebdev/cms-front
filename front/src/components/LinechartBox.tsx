@@ -3,19 +3,19 @@ import {
   Line,
   Tooltip,
   ResponsiveContainer,
+  // XAxis
 } from "recharts";
 
-type ChartData = {
-  name: string,
-  uv: number,
-  pv:number,
-  amt:number,
-}
+type linechartData = {
+  numberofdocuments: number;
+  month: string;
+};
+
 
 type ChartBoxProp = {
   bgColor: string;
   title:string;
-  data:ChartData[]
+  data:linechartData[]
 };
 
 export default function ChartBox({ bgColor , title , data}: ChartBoxProp) {
@@ -25,16 +25,26 @@ export default function ChartBox({ bgColor , title , data}: ChartBoxProp) {
         {title}
       </h2>
       <ResponsiveContainer width="100%"    height={90}>
+
         <LineChart data={data}>
           <Line
             type="monotone"
-            dataKey="pv"
+            dataKey="numberofdocuments"
+            name="month-user"
+            stroke="#fff"
+            strokeWidth={7}
+            dot={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="totalAmount"
+            name="month-user"
             stroke="#fff"
             strokeWidth={7}
             dot={false}
           />
           {/* <XAxis
-                dataKey={"name"}
+                dataKey={"month"}
                 axisLine={false}
                 tickLine={false}
                 // stroke="transparent"
@@ -46,7 +56,7 @@ export default function ChartBox({ bgColor , title , data}: ChartBoxProp) {
               color: "#fff",
             }}
             wrapperStyle={{
-              width: "70px",
+              width: "auto",
               height: "5px",
               fontSize: ".8rem",
               color: "#fff",
@@ -55,7 +65,7 @@ export default function ChartBox({ bgColor , title , data}: ChartBoxProp) {
               backgroundColor: bgColor,
               border: "1px solid #fff",
               borderRadius: "5px",
-              padding: "0 8px 0 0",
+              padding: "0 8px 0 8px",
             }}
             cursor={false}
             offset={20}
