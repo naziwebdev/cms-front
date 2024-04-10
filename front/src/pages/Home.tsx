@@ -17,7 +17,6 @@ import { VectorMap } from "@south-paw/react-vector-maps";
 import iranMap from "../iran.svg.json";
 
 export default function Home() {
-
   return (
     <div
       className="w-[calc(100vw-90px)] 
@@ -46,14 +45,16 @@ export default function Home() {
         <CommentScoreBox />
       </div>
       <div
-        className="me-20 mt-16 w-[calc(100vw-90px)] overflow-x-auto rounded-3xl bg-white p-4
+        className="me-20 mt-16 w-[calc(100vw-90px)]  rounded-3xl bg-white p-4
        shadow-lg shadow-zinc-300
        xs:w-[calc(100vw-130px)] "
       >
         <h2 className="px-4 pb-4 font-semibold text-stone-700">
           لیست سفارش ها
         </h2>
-        <OrderTable />
+        <div className="h-[50vh] overflow-auto">
+          <OrderTable />
+        </div>
       </div>
       <div className="mt-16 grid grid-cols-1 items-center gap-5 md:grid-cols-2 lg:gap-x-5 xl:grid-cols-4">
         <TodoListBox />
@@ -77,47 +78,48 @@ export default function Home() {
         </div>
       </div>
       <div
-        className="me-20 mt-16 w-[calc(100vw-90px)]  p-4
+        className="me-20 mt-16 grid  w-[calc(100vw-90px)]
     
-       xs:w-[calc(100vw-130px)] grid grid-cols-1 items-center gap-5 lg:grid-cols-2 lg:gap-x-24"
+       grid-cols-1 items-center gap-5 p-4 xs:w-[calc(100vw-130px)] lg:grid-cols-2 lg:gap-x-24"
       >
         <div className="">
-        <h2 className="px-4 pb-4 font-semibold text-stone-700">
-          پراکندگی ها :
-        </h2>
+          <h2 className="px-4 pb-4 font-semibold text-stone-700">
+            پراکندگی ها :
+          </h2>
 
-        <div  className="w-full">
-          <VectorMap {...iranMap}  layerProps={{ fill: "#7e22ce" }} />
+          <div className="w-full">
+            <VectorMap {...iranMap} layerProps={{ fill: "#7e22ce" }} />
+          </div>
         </div>
-        </div>
-        <div className=" rounded-2xl bg-white p-6
-       shadow-lg shadow-zinc-300 text-center">
-       < div className="p-5 flex flex-col xs:flex-row gap-y-4 text-sm xs:text-base justify-around font-semibold text-stone-700">
-        <div className="flex gap-x-2 items-center ">
-          <span className="w-6 h-6  rounded-md bg-primary-y"></span>
-          پراکندگی سفارشات
-        </div>
+        <div
+          className=" rounded-2xl bg-white p-6
+       text-center shadow-lg shadow-zinc-300"
+        >
+          <div className="flex flex-col justify-around gap-y-4 p-5 text-sm font-semibold text-stone-700 xs:flex-row xs:text-base">
+            <div className="flex items-center gap-x-2 ">
+              <span className="h-6 w-6  rounded-md bg-primary-y"></span>
+              پراکندگی سفارشات
+            </div>
 
-        <div className="flex gap-x-2 items-center">
-          <span className="w-6 h-6  rounded-md bg-primary-pk"></span>
-          پراکندگی خریداران
-        </div>
-       
-        </div>
-        <div className="flex flex-col gap-y-4 2xs:flex-row mt-5 items-center justify-around">
-          <ul className="[&>*]:font-semibold [&>*]:pt-4 [&>*]:text-primary-y list-decimal">
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-          </ul>
-          <ul className="[&>*]:font-semibold [&>*]:pt-4 [&>*]:text-primary-pk list-decimal">
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-            <li className="">تهران</li>
-          </ul>
-       </div>
+            <div className="flex items-center gap-x-2">
+              <span className="h-6 w-6  rounded-md bg-primary-pk"></span>
+              پراکندگی خریداران
+            </div>
+          </div>
+          <div className="mt-5 flex flex-col items-center justify-around gap-y-4 2xs:flex-row">
+            <ul className="list-decimal [&>*]:pt-4 [&>*]:font-semibold [&>*]:text-primary-y">
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+            </ul>
+            <ul className="list-decimal [&>*]:pt-4 [&>*]:font-semibold [&>*]:text-primary-pk">
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+              <li className="">تهران</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -74,6 +74,12 @@ export default function Users() {
         });
         getUsers();
         setToggleAddModal(false);
+      }else{
+        swal({
+          title: "عملیات با شکست مواجه شد",
+          icon: "error",
+          buttons: "بستن" as any,
+        });
       }
     });
 

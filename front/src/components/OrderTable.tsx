@@ -162,7 +162,7 @@ export default function OrderTable() {
               </td>
               <td className="">{order.product.title}</td>
               <td className="">{order.price.toLocaleString()} تومان </td>
-              <td className="">{order.user.name}</td>
+              <td className="">{order.user?.name}</td>
               <td className="">
                 {new Date(order.createdAt).toLocaleDateString("fa-IR", {
                   year: "numeric",
