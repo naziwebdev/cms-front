@@ -1,35 +1,71 @@
-
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group C", value: 100 },
-  { name: "Group D", value: 200 },
-  { name: "Group C", value: 300 },
+
+const COLORS = [
+  "#a78bfa",
+  "#d8b4fe",
+  "#f0abfc",
+  "#c7d2fe",
+  "#f9a8d4",
+  "#d946ef",
 ];
 
-const COLORS = ["#a78bfa","#d8b4fe","#f0abfc","#c7d2fe","#f9a8d4","#d946ef"];
+type PiechartType = {
+  _id: string;
+  count: number;
+  categoryDetails: [
+    {
+      _id: string;
+      title: string;
+      href: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: 0;
+    },
+  ];
+};
 
 export default function PiechartBox() {
+  const [categoryData, setCategoryData] = useState<PiechartType[]>([]);
+
+  const getCategoryData = async () => {
+    const res = await fetch(
+      "http://localhost:4000/v1/products/reportCategory",
+      {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+        },
+      },
+    );
+
+    if (res.status === 200) {
+      const data = await res.json();
+      setCategoryData(data);
+    }
+  };
+
+  useEffect(() => {
+    getCategoryData();
+  }, []);
+
   return (
     <div className="">
-         <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold text-stone-700">
-      دسته بندی محصولات :
+      <h2 className="pb-4 ps-2 text-base font-semibold text-stone-700 2xs:text-lg">
+        دسته بندی محصولات :
       </h2>
       <ResponsiveContainer width="102%" height={260}>
-        <PieChart
-        >
+        <PieChart>
           <Pie
-            data={data}
+            data={categoryData}
             innerRadius={70}
             outerRadius={110}
             fill="#8884d8"
             paddingAngle={1}
-            dataKey="value"
+            dataKey="count"
           >
-            {data.map((entry, index) => (
+            {categoryData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
@@ -38,35 +74,28 @@ export default function PiechartBox() {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-      <ul className="text-xs sm:text-sm flex gap-x-4 2xs:gap-x-8">
-        <div>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#a78bfa]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#d8b4fe]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#f0abfc]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        </div>
-        <div>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#c7d2fe]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#f9a8d4]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        <li className="flex items-center gap-x-2.5 pt-3">
-            <span className="w-4 h-4 bg-[#d946ef]"></span>
-            <p className="">کالای دیجیتال</p>
-        </li>
-        </div>
+      <ul className="grid grid-cols-2 gap-x-4 text-xs 2xs:gap-x-8 sm:text-sm">
+        {categoryData.map((item) => (
+          <li key={item._id} className="flex items-center gap-x-2.5 pt-3">
+            <span
+              className={`h-4 w-4
+             ${
+               item.categoryDetails[0].title === "وسایل خانه"
+                 ? "bg-[#a78bfa]"
+                 : item.categoryDetails[0].title === "ورزشی"
+                   ? "bg-[#d8b4fe]"
+                   : item.categoryDetails[0].title === "آرایشی و بهداشتی"
+                     ? "bg-[#f0abfc]"
+                     : item.categoryDetails[0].title === "دیجیتال"
+                       ? "bg-[#c7d2fe]"
+                       : item.categoryDetails[0].title === "پوشاک"
+                         ? "bg-[#f9a8d4]"
+                           : ""
+             }`}
+            ></span>
+            <p className="">{item.categoryDetails[0]?.title}</p>
+          </li>
+        ))}
       </ul>
     </div>
   );
