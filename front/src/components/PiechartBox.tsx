@@ -1,7 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
 
-
 const COLORS = [
   "#a78bfa",
   "#d8b4fe",
@@ -65,12 +64,21 @@ export default function PiechartBox() {
             paddingAngle={1}
             dataKey="count"
           >
-            {categoryData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
+            {categoryData.map((entry, index) =>
+              entry.categoryDetails[0].title === "وسایل خانه" ? (
+                <Cell key={`cell-${index}`} fill="#a78bfa" />
+              ) : entry.categoryDetails[0].title === "ورزشی" ? (
+                <Cell key={`cell-${index}`} fill="#d8b4fe" />
+              ) : entry.categoryDetails[0].title === "آرایشی و بهداشتی" ? (
+                <Cell key={`cell-${index}`} fill="#f0abfc" />
+              ) : entry.categoryDetails[0].title === "دیجیتال" ? (
+                <Cell key={`cell-${index}`} fill="#c7d2fe" />
+              ) : entry.categoryDetails[0].title === "پوشاک" ? (
+                <Cell key={`cell-${index}`} fill="#f9a8d4" />
+              ) : (
+                ""
+              ),
+            )}
           </Pie>
         </PieChart>
       </ResponsiveContainer>
@@ -90,7 +98,7 @@ export default function PiechartBox() {
                        ? "bg-[#c7d2fe]"
                        : item.categoryDetails[0].title === "پوشاک"
                          ? "bg-[#f9a8d4]"
-                           : ""
+                         : ""
              }`}
             ></span>
             <p className="">{item.categoryDetails[0]?.title}</p>
