@@ -31,7 +31,6 @@ const ProgressBar = ({ value, maxCount }: progressTypes) => {
 
 export default function CommentScoreBox() {
   const [scoreCount, setScoreCount] = useState<commentScoreTypes[]>([]);
-  const [test,setTest] = useState<number | undefined>()
 
   const getScoreCount = async () => {
     const res = await fetch("http://localhost:4000/v1/comments/report", {
