@@ -113,16 +113,16 @@ export default function TodoListBox() {
       </div>
       <div className="flex bg-todo h-[350px] flex-col items-center overflow-y-auto bg-white  p-3 xs:p-5">
         <div className="w-full flex">
-          <input
+          {/* <input
             type="text"
             placeholder="اضافه کردن تودو ..."
             className="mb-8 w-2/3 xs:flex-1 rounded-s-lg
          bg-zinc-200 p-2 xs:px-4 outline-none placeholder:text-xs xs:placeholder:text-base
           placeholder:text-white"
-          />
+          /> */}
           <button
             onClick={openModalHandler}
-            className="flex h-10 w-1/3 xs:w-14 items-center justify-center rounded-e-lg bg-primary-p"
+            className="flex h-10 w-full mb-4 items-center justify-center rounded-e-lg bg-primary-p"
           >
             <FaPlus className="text-white" />
           </button>
