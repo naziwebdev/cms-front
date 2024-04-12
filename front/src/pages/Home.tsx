@@ -127,7 +127,7 @@ export default function Home() {
       </div>
       <div
         className="me-20 mt-16 w-[calc(100vw-90px)]  rounded-3xl bg-white p-4
-       shadow-lg shadow-zinc-300
+       shadow-lg shadow-zinc-300 dark:shadow-lg dark:shadow-zinc-700
        xs:w-[calc(100vw-130px)] "
       >
         <h2 className="px-4 pb-4 font-semibold text-stone-700">
@@ -140,7 +140,7 @@ export default function Home() {
       <div className="mt-16 grid grid-cols-1 items-center gap-5 md:grid-cols-2 lg:gap-x-5 xl:grid-cols-4">
         <TodoListBox />
         <Calendar
-          className="purple w-full  bg-fuchsia-300  shadow-xl shadow-zinc-400"
+          className="purple w-full  bg-fuchsia-300 dark:shadow-lg dark:shadow-zinc-700 shadow-xl shadow-zinc-400"
           calendar={persian}
           locale={persian_fa}
         />
@@ -150,7 +150,7 @@ export default function Home() {
       </div>
       <div
         className="me-20 mt-16 w-[calc(100vw-90px)]  rounded-3xl bg-white p-4
-       shadow-lg shadow-zinc-300
+       shadow-lg shadow-zinc-300 dark:shadow-lg dark:shadow-zinc-700
        xs:w-[calc(100vw-130px)] "
       >
         <h2 className="px-4 pb-4 font-semibold text-stone-700">لیست کاربران</h2>
@@ -164,7 +164,7 @@ export default function Home() {
        grid-cols-1 items-center gap-5 p-4 xs:w-[calc(100vw-130px)] lg:grid-cols-2 lg:gap-x-24"
       >
         <div className="">
-          <h2 className="px-4 pb-4 font-semibold text-stone-700">
+          <h2 className="px-4 pb-4 font-semibold dark:text-zinc-100 text-stone-700">
             پراکندگی ها :
           </h2>
 
@@ -174,7 +174,7 @@ export default function Home() {
         </div>
         <div
           className=" rounded-2xl bg-white p-6
-       text-center shadow-lg shadow-zinc-300"
+       text-center shadow-lg shadow-zinc-300 dark:shadow-lg dark:shadow-zinc-700"
         >
           <div className="flex flex-col justify-around gap-y-4 p-5 text-sm font-semibold text-stone-700 xs:flex-row xs:text-base">
             <div className="flex items-center gap-x-2 ">

@@ -50,9 +50,9 @@ export default function Tickets() {
           <TicketChatBox />
         </div>
         <div className="w-full sm:w-[50%] lg:w-[32%]">
-          <h2 className=" text-xl font-semibold">تیکت ها</h2>
-          <p className="flex items-center gap-x-2 pt-3">
-            <FaSortAmountDownAlt className="text-primary-pk" />
+          <h2 className=" text-xl font-semibold dark:text-zinc-100">تیکت ها</h2>
+          <p className="flex items-center gap-x-2 pt-3 dark:text-zinc-100">
+            <FaSortAmountDownAlt className="text-primary-pk " />
             فیلتر بر اساس
           </p>
           <div className="mt-2.5 flex items-center justify-center rounded-2xl border-[1px] border-pink-200 bg-white p-3.5 text-xs font-semibold  text-stone-500 shadow-lg xs:text-sm">

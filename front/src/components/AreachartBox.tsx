@@ -60,10 +60,10 @@ export default function AreachartBox() {
 
   return (
     <div className="">
-      <h2 className="pb-4 ps-2 text-base font-semibold text-stone-700 2xs:text-lg">
+      <h2 className="pb-4 ps-2 text-base font-semibold dark:text-zinc-200 text-stone-700 2xs:text-lg">
         مقایسه درامد و هزینه ها :
       </h2>
-      <ul className="flex gap-x-4 text-xs 2xs:gap-x-8 sm:text-sm">
+      <ul className="flex gap-x-4 text-xs 2xs:gap-x-8 sm:text-sm dark:text-zinc-200">
         <li className="flex items-center gap-x-2.5 pt-3">
           <span className="h-4 w-4 bg-[#F84AD0]"></span>
           <p className="">هزینه</p>

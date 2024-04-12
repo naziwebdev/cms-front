@@ -82,7 +82,7 @@ export default function CommentScoreBox() {
 
 
   return (
-    <div className="h-auto rounded-3xl bg-white p-4 shadow-xl shadow-zinc-300 sm:p-10">
+    <div className="h-auto rounded-3xl bg-white dark:shadow-lg dark:shadow-zinc-700 p-4 shadow-xl shadow-zinc-300 sm:p-10">
       <h2 className="text-xl text-zinc-500">نظرات مشتریان</h2>
       <div className="mt-8 flex h-12 w-full flex-wrap items-center justify-between rounded-xl bg-yellow-100 px-3 text-sm text-primary-y sm:justify-around sm:text-base">
         <div className="flex gap-x-1 sm:gap-x-5">

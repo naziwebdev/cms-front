@@ -11,6 +11,7 @@ export default function Header() {
   const [toggleNotifs, setToggleNotifs] = useState<boolean>(false);
   const [notifs, setNotifs] = useState<NotifTypes[]>([]);
   const [userData, setUserData] = useState<AdminDataTypes>();
+  const [darkMode, setDarkMode] = useState<boolean | string>(false);
 
   const changeSwitch = () => {
     setToggleSwitch((prev) => !prev);
@@ -66,13 +67,26 @@ export default function Header() {
     getAdminData();
   }, []);
 
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem("isDark") === "true";
+    setDarkMode(isDarkMode);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode as any);
+    localStorage.setItem("isDark", darkMode as any);
+  }, [darkMode]);
+
   return (
     <div className="mb-8 flex items-center justify-end  gap-x-4 sm:justify-between lg:p-2.5 xl:mb-5">
-      <h1 className="hidden text-base font-bold text-gray-600 sm:flex md:text-lg lg:text-xl">
+      <h1 className="hidden text-base font-bold dark:text-zinc-100 text-gray-600 sm:flex md:text-lg lg:text-xl">
         به داشبورد خوش آمدید !
       </h1>
       <div className=" flex items-center gap-x-1.5 xs:gap-x-3 md:gap-x-5 lg:gap-x-8">
-        <div className="relative h-10 w-24 rounded-full border-4 border-primary-p bg-primary-p shadow-xl md:h-12 md:w-28 lg:w-36">
+        <button
+          onClick={() => setDarkMode((prev) => !prev)}
+          className="relative h-10 w-24 rounded-full border-4 border-primary-p bg-primary-p shadow-xl md:h-12 md:w-28 lg:w-36"
+        >
           <span
             className={`absolute bottom-0 left-0 top-0 h-full w-8 cursor-pointer rounded-full bg-primary-pk xs:w-10 md:w-12 lg:w-[4.6rem] ${toggleSwitch && "right-0"}`}
             onClick={changeSwitch}
@@ -90,10 +104,10 @@ export default function Header() {
              text-3xl text-primary-y md:left-2 md:top-1 md:text-4xl"
             />
           )}
-        </div>
+        </button>
         <div className="relative ms-1 flex cursor-pointer items-center justify-center rounded-lg">
           <IoMdNotifications
-            className="text-2xl text-stone-600 md:text-[1.7rem]
+            className="text-2xl dark:text-zinc-100 text-stone-600 md:text-[1.7rem]
            lg:text-3xl"
             onClick={toggleNotifsHandler}
           />
@@ -137,10 +151,10 @@ export default function Header() {
 
         <div className="flex items-center gap-x-1.5 md:gap-x-2.5">
           <div className="hidden text-end sm:block">
-            <p className="pb-1.5 text-xs font-bold text-stone-800 md:text-sm lg:pb-2 lg:text-base">
+            <p className="pb-1.5 text-xs font-bold dark:text-zinc-100 text-stone-800 md:text-sm lg:pb-2 lg:text-base">
               {userData?.name}
             </p>
-            <p className="text-[.7rem] text-zinc-400 md:text-xs">
+            <p className="text-[.7rem] dark:text-zinc-300 text-zinc-400 md:text-xs">
               {userData?.email}
             </p>
           </div>

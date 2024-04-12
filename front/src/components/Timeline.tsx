@@ -27,7 +27,7 @@ export default function Timeline() {
             key={crypto.randomUUID()}
             className="timeline-xs xs:timeline relative gap-x-3 xs:flex xs:gap-x-8 lg:gap-x-16"
           >
-            <p className="font-semibold"> {day?.date}</p>
+            <p className="font-semibold dark:text-zinc-100"> {day?.date}</p>
             <div className="flex gap-x-4 2xs:gap-x-8  ">
               <span className=" font-semibold text-primary-b">
                 {day?.title}{" "}

@@ -59,7 +59,7 @@ export default function TodayEventsBox() {
  
 
   return (
-    <div className={`flex w-full flex-col overflow-y-auto rounded-3xl rounded-b-none h-[400px] bg-fuchsia-300 p-6 text-white shadow-xl shadow-zinc-400`}>
+    <div className={`flex w-full flex-col overflow-y-auto rounded-3xl rounded-b-none h-[400px] bg-fuchsia-300 p-6 text-white dark:shadow-lg dark:shadow-zinc-700 shadow-xl shadow-zinc-400`}>
       <div className="flex flex-col items-center">
         <h2 className="text-[3.5rem] font-bold">{nowFa.split("/")[2]}</h2>
         <p className="flex items-center gap-x-2 tracking-widest">

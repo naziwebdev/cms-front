@@ -296,7 +296,7 @@ export default function Calender() {
 
                 if (color) return { className: "highlight highlight-" + color };
               }}
-              className="purple w-full  bg-fuchsia-300  shadow-xl shadow-zinc-400"
+              className="purple w-full  bg-fuchsia-300 dark:shadow-lg dark:shadow-zinc-700 shadow-xl shadow-zinc-400"
               calendar={persian}
               locale={persian_fa}
             />

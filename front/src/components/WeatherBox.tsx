@@ -51,7 +51,7 @@ const converNumToNameMonth = () => {
 
 
   return (
-    <div className="bg-weather h-[400px] rounded-3xl px-3 py-5 xs:p-5 shadow-xl shadow-zinc-400">
+    <div className="bg-weather h-[400px] rounded-3xl px-3 py-5 xs:p-5 dark:shadow-lg dark:shadow-zinc-700 shadow-xl shadow-zinc-400">
         <h2 className="text-zinc-100 text-lg font-semibold">نمای کلی آب و هوا</h2>
         <div className="flex mt-8 gap-x-4 xs:gap-x-8">
             <h1 className="text-white text-[3rem] xs:text-[4rem] pe-2 xs:pe-5 border-e-[1px] border-zinc-300">{Math.round(weather?.temperature_2m_max[0])}</h1>

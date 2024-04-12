@@ -51,7 +51,7 @@ export default function PiechartBox() {
 
   return (
     <div className="">
-      <h2 className="pb-4 ps-2 text-base font-semibold text-stone-700 2xs:text-lg">
+      <h2 className="pb-4 ps-2 text-base font-semibold dark:text-zinc-200 text-stone-700 2xs:text-lg">
         دسته بندی محصولات :
       </h2>
       <ResponsiveContainer width="102%" height={260}>
@@ -84,7 +84,7 @@ export default function PiechartBox() {
       </ResponsiveContainer>
       <ul className="grid grid-cols-2 gap-x-4 text-xs 2xs:gap-x-8 sm:text-sm">
         {categoryData.map((item) => (
-          <li key={item._id} className="flex items-center gap-x-2.5 pt-3">
+          <li key={item._id} className="flex dark:text-zinc-200 items-center gap-x-2.5 pt-3">
             <span
               className={`h-4 w-4
              ${

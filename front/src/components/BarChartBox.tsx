@@ -52,7 +52,7 @@ export default function BarChartBox() {
 
   return (
     <div className="">
-      <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold text-stone-700">
+      <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold dark:text-zinc-200 text-stone-700">
         فروش ماهانه :
       </h2>
       <ResponsiveContainer width="112%" height={400}>

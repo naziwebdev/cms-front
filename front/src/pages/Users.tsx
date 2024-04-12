@@ -107,9 +107,9 @@ export default function Users() {
 
       <div
         className=" mt-10 w-[calc(100vw-90px)] overflow-x-auto
-      bg-transparent xs:w-[calc(100vw-130px)] shadow-lg shadow-zinc-200"
+      bg-transparent xs:w-[calc(100vw-130px)] shadow-lg shadow-zinc-200 dark:shadow-lg dark:shadow-zinc-700"
       >
-          <h2 className="pb-4 text-xl ">لیست کاربران</h2>
+          <h2 className="pb-4 text-xl dark:text-zinc-100">لیست کاربران</h2>
         <UserTable data={usersShowPage} />
       </div>
       <Pagination
