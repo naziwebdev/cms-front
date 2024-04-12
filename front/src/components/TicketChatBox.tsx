@@ -1,15 +1,14 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
 import UserTicketMessage from "../components/UserTicketMessage";
 import ReplyTicket from "../components/ReplyTicket";
-// import { BsEmojiSmile } from "react-icons/bs";
 import { BsFillSendFill } from "react-icons/bs";
 import { GrAttachment } from "react-icons/gr";
-import InfoContext from "../context/InfoContext";
+import TicketContext from "../context/TicketContext";
 import { useContext, useState } from "react";
 import swal from "sweetalert";
 
 export default function TicketChatBox() {
-  let ticketContext = useContext(InfoContext);
+  let ticketContext = useContext(TicketContext);
   const [ticketAnswerBody, setTicketAnswerBody] = useState<string>();
 
   const sendAnswerHandler = async () => {

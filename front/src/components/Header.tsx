@@ -10,7 +10,7 @@ export default function Header() {
   const [toggleSwitch, setToggleSwitch] = useState<boolean>(false);
   const [toggleNotifs, setToggleNotifs] = useState<boolean>(false);
   const [notifs, setNotifs] = useState<NotifTypes[]>([]);
-  const [userData,setUserData] = useState<AdminDataTypes>()
+  const [userData, setUserData] = useState<AdminDataTypes>();
 
   const changeSwitch = () => {
     setToggleSwitch((prev) => !prev);
@@ -61,10 +61,9 @@ export default function Header() {
     }
   };
 
-
   useEffect(() => {
     getNotifsData();
-    getAdminData()
+    getAdminData();
   }, []);
 
   return (
@@ -115,20 +114,22 @@ export default function Header() {
               marker:text-xl marker:text-primary-y md:gap-y-2 md:text-sm [&>*:nth-child(even)]:text-primary-pk
               [&>*:nth-child(odd)]:text-primary-p"
               >
-                   {notifs.map((notif) => (
-            <li
-              key={notif._id}
-              className={`${notif.seen === 1 && "line-through decoration-primary-pk"} flex items-center gap-x-3`}
-            >
-              <span onClick={() => tickNotifHandler(notif._id)}
-              className="relative h-5 w-5 cursor-pointer bg-primary-p">
-              {notif.seen === 1 && (
-            <TiTick className="absolute top-0 left-0 text-2xl text-primary-pk" />
-          )}
-              </span>
-              <p className="text-primary-y">{notif.message}</p>
-            </li>
-          ))}
+                {notifs.map((notif) => (
+                  <li
+                    key={notif._id}
+                    className={`${notif.seen === 1 && "line-through decoration-primary-pk"} flex items-center gap-x-3`}
+                  >
+                    <span
+                      onClick={() => tickNotifHandler(notif._id)}
+                      className="relative h-5 w-5 cursor-pointer bg-primary-p"
+                    >
+                      {notif.seen === 1 && (
+                        <TiTick className="absolute left-0 top-0 text-2xl text-primary-pk" />
+                      )}
+                    </span>
+                    <p className="text-primary-y">{notif.message}</p>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
@@ -137,30 +138,26 @@ export default function Header() {
         <div className="flex items-center gap-x-1.5 md:gap-x-2.5">
           <div className="hidden text-end sm:block">
             <p className="pb-1.5 text-xs font-bold text-stone-800 md:text-sm lg:pb-2 lg:text-base">
-             {userData?.name}
+              {userData?.name}
             </p>
             <p className="text-[.7rem] text-zinc-400 md:text-xs">
-             {userData?.email}
+              {userData?.email}
             </p>
           </div>
-          {/* <img
-            src="/images/user-04.jpg"
-            alt="avatar"
-            className="h-12 w-12 rounded-full border-4 border-primary-pk object-cover md:h-16 md:w-16 lg:h-20 lg:w-20"
-          /> */}
-              {userData?.avatar? (
-        <img
-          src={`http://localhost:4000/users/avatar/${userData?.avatar}`}
-          alt="avatar"
-          className="h-12 w-12 rounded-full border-4 border-primary-pk object-cover md:h-16 md:w-16 lg:h-20 lg:w-20"
-        />
-      ) : (
-        <img
-          src="/images/3d-minimal-purple-user-profile-avatar-icon-in-circle-white-frame-design-vector.jpg"
-          alt="avatar"
-          className="h-12 w-12 rounded-full border-4 border-primary-pk object-cover md:h-16 md:w-16 lg:h-20 lg:w-20"
-        />
-      )}
+
+          {userData?.avatar ? (
+            <img
+              src={`http://localhost:4000/users/avatar/${userData?.avatar}`}
+              alt="avatar"
+              className="h-12 w-12 rounded-full border-4 border-primary-pk object-cover md:h-16 md:w-16 lg:h-20 lg:w-20"
+            />
+          ) : (
+            <img
+              src="/images/3d-minimal-purple-user-profile-avatar-icon-in-circle-white-frame-design-vector.jpg"
+              alt="avatar"
+              className="h-12 w-12 rounded-full border-4 border-primary-pk object-cover md:h-16 md:w-16 lg:h-20 lg:w-20"
+            />
+          )}
         </div>
       </div>
     </div>

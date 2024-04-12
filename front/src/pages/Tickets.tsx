@@ -4,7 +4,7 @@ import TicketBox from "../components/TicketBox";
 import TicketChatBox from "../components/TicketChatBox";
 import { TicketTypes } from "../TypescriptTypes/TicketTypes";
 import { oneTicketTypes } from "../TypescriptTypes/TicketTypes";
-import InfoContext from "../context/InfoContext";
+import TicketContext from "../context/TicketContext";
 
 export default function Tickets() {
   const [btnActive, setBtnActive] = useState<string>("all");
@@ -44,7 +44,7 @@ export default function Tickets() {
 
 
   return (
-    <InfoContext.Provider value={{ ticketID, getOneTicket , ticket}}>
+    <TicketContext.Provider value={{ ticketID, getOneTicket , ticket}}>
       <div className="mt-2  flex w-[calc(100vw-90px)] flex-col justify-between gap-x-2  gap-y-6 xs:w-[calc(100vw-130px)] sm:flex-row lg:gap-x-5 ">
         <div className="order-1 mb-5 w-full rounded-xl bg-white shadow-lg sm:order-none sm:w-[50%] lg:w-[68%]">
           <TicketChatBox />
@@ -107,6 +107,6 @@ export default function Tickets() {
           </div>
         </div>
       </div>
-    </InfoContext.Provider>
+    </TicketContext.Provider>
   );
 }

@@ -1,5 +1,5 @@
 import { TicketTypes } from "../TypescriptTypes/TicketTypes";
-import InfoContext from "../context/InfoContext";
+import TicketContext from "../context/TicketContext";
 import { useContext } from "react";
 
 type TicketPropsTypes = {
@@ -9,7 +9,7 @@ type TicketPropsTypes = {
 
 export default function TicketBox({ data, setTicketID }: TicketPropsTypes) {
 
-  let ticketContext = useContext(InfoContext)
+  let ticketContext = useContext(TicketContext)
 
   const showTicketHandler = (ticketId:string) => {
     setTicketID(ticketId);

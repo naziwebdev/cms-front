@@ -12,6 +12,7 @@ useEffect(() => {
 
 },[])
 
+
 const now = new Date();
 const nowFa = now.toLocaleDateString("fa-IR", {
   year: "numeric",
