@@ -1,14 +1,14 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
 
-const COLORS = [
-  "#a78bfa",
-  "#d8b4fe",
-  "#f0abfc",
-  "#c7d2fe",
-  "#f9a8d4",
-  "#d946ef",
-];
+// const COLORS = [
+//   "#a78bfa",
+//   "#d8b4fe",
+//   "#f0abfc",
+//   "#c7d2fe",
+//   "#f9a8d4",
+//   "#d946ef",
+// ];
 
 type PiechartType = {
   _id: string;
