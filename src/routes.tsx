@@ -16,18 +16,18 @@ import Calender from './pages/Apps/Calender'
 
 const routes = [
     { path: '/', element: <Home /> },
-    { path: '/users', element: <Users /> },
+    { path: '/users/:page', element: <Users /> },
     { path: '/products', element: <Products /> },
     { path: '/orders', element: <Orders /> },
     { path: '/category', element: <Category /> },
     { path: '/tickets', element: <Tickets /> },
-    { path: '/offs', element: <Offs /> },
+    { path: '/offs/:page', element: <Offs /> },
     { path: '/costs', element: <Costs /> },
-    { path: '/comments', element: <Comments /> },
+    { path: '/comments/:page', element: <Comments /> },
     {
         path: '/apps/*', element: <IndexApps />, children: [
 
-            { path: 'todo', element: <Todo /> },
+            { path: 'todo/:page', element: <Todo /> },
             { path: 'note', element: <Note /> },
             { path: 'calender', element: <Calender /> }
         ]

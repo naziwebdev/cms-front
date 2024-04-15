@@ -1,301 +1,259 @@
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { MdEditSquare } from "react-icons/md";
-import { MdAppBlocking } from "react-icons/md";
-import { GrUserAdmin } from "react-icons/gr";
-
+import UserTable  from "../components/UserTable";
+import { useForm, Controller } from "react-hook-form";
+import UserSchema from "../validations/UserSchema";
 import AddButton from "../components/AddButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DetailsModal from "../components/DetailsModal";
-import FormInput from "../components/FormInput";
+import { UsersTypes } from "../TypescriptTypes/UserTypes";
+import { UserFormTypes } from "../TypescriptTypes/UserTypes";
+import { yupResolver } from "@hookform/resolvers/yup";
+import swal from "sweetalert";
+import Pagination from "../components/Pagination";
+
 
 export default function Users() {
-  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
+  const [allUser, setAllUser] = useState<UsersTypes[]>([]);
+  const [usersShowPage, setUsersShowPage] = useState<UsersTypes[]>([]);
+
+
+  const {
+    register: register1,
+    reset: reset1,
+    control: control1,
+    handleSubmit: handleSubmit1,
+    formState: { errors: errors1 },
+  } = useForm({
+    defaultValues: {
+      avatar: "",
+      name: "",
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword:""
+    },
+    resolver: yupResolver(UserSchema),
+  });
+
+ 
+
+  const getUsers = async () => {
+    const res = await fetch("http://localhost:4000/v1/users");
+    const data = await res.json();
+    setAllUser(data);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+
+  const formSubmitting = (data:UserFormTypes,event:any) => {
+    event.preventDefault()
+    let formData = new FormData();
+
+    formData.append("avatar", data.avatar);
+    formData.append("name", data.name);
+    formData.append("username", data.username);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("password",data.password)
+    formData.append("confirmPassword",data.confirmPassword)
+
+    fetch("http://localhost:4000/v1/auth/register", {
+      method: "POST",
+      body: formData,
+    }).then((res) => {
+      if (res.status === 201) {
+        res.json();
+        swal({
+          title: "کاربر با موفقیت افزوده شد",
+          icon: "success",
+          buttons: "بستن" as any,
+        });
+        getUsers();
+        setToggleAddModal(false);
+      }else{
+        swal({
+          title: "عملیات با شکست مواجه شد",
+          icon: "error",
+          buttons: "بستن" as any,
+        });
+      }
+    });
+
+    reset1();
+  }
+
+
 
   const openModalHandler = () => {
-    setToggleModal(true);
+    setToggleAddModal(true);
   };
 
   const closeModalHandler = () => {
-    setToggleModal(false);
+    setToggleAddModal(false);
   };
 
+
+
   return (
-    <div className=" xl:h-[calc(100vh-160px)]">
+    <div className="">
       <AddButton
         openModalHandler={openModalHandler}
         title={"افزودن کاربر جدید"}
       />
 
       <div
-        className="] w-[calc(100vw-90px)] overflow-x-auto bg-transparent
-      xs:w-[calc(100vw-130px)]"
+        className=" mt-10 w-[calc(100vw-90px)] overflow-x-auto
+      bg-transparent xs:w-[calc(100vw-130px)] shadow-lg shadow-zinc-200 dark:shadow-lg dark:shadow-zinc-700"
       >
-        <h2 className="pb-4 text-xl ">کاربران</h2>
-        <table className="w-full text-sm md:text-base shadow-2xl">
-          <thead className="bg-pink-100">
-            <tr className="border-b-[1.5px] border-zinc-200">
-              <th className="min-w-[240px] py-3">کاربر</th>
-              <th className="min-w-[100px]">نام کاربری</th>
-              <th className="min-w-[100px]">شماره تماس</th>
-              <th className="min-w-[100px]">نقش</th>
-              <th className="min-w-[50px]">ویرایش</th>
-              <th className="min-w-[50px]">حذف</th>
-              <th className="min-w-[50px]">تغییر نقش</th>
-              <th className="min-w-[50px]">بن</th>
-            </tr>
-          </thead>
-          <tbody className="">
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className=" flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-            <tr className="border-y-[10px] border-neutral-100 bg-white text-center">
-              <td className="p-1.5">
-                <div className="flex items-center justify-center gap-x-5">
-                  <img
-                    src="/images/832a460b522c84fa9650c11face5927e.jpg"
-                    alt="product"
-                    className=" h-12 w-12 rounded-full"
-                  />
-                  <div className="flex flex-col gap-y-1.5 text-sm">
-                    <p>نازنین رستگار</p>
-                    <p className="text-sm text-zinc-500">nazi777@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td className="">هندزفری بلوتوثی</td>
-              <td>500000 تومان</td>
-              <td>
-                <span className="rounded-full bg-fuchsia-200  px-6 py-1 text-primary-pk font-semibold text-sm">
-                  ادمین
-                </span>
-              </td>
-              <td>
-                <button className="">
-                  <MdEditSquare className="text-xl text-primary-b" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <RiDeleteBin6Fill className="text-xl text-primary-pk" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <GrUserAdmin className="text-xl  text-primary-p" />
-                </button>
-              </td>
-              <td>
-                <button className="">
-                  <MdAppBlocking className="text-xl  text-primary-y" />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="fixed bottom-0 left-6 right-[6.8rem] z-10 flex justify-center gap-x-5 rounded-b-xl  p-5">
-          <button className="flex w-10 items-center justify-center rounded-full bg-primary-y py-1 text-white hover:bg-black sm:w-16">
-            1
-          </button>
-          <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-            2
-          </button>
-          <button className="flex w-10 items-center justify-center rounded-full bg-pink-200 py-1 text-white hover:bg-black sm:w-16">
-            3
-          </button>
-        </div>
+          <h2 className="pb-4 text-xl dark:text-zinc-100">لیست کاربران</h2>
+        <UserTable data={usersShowPage} />
       </div>
-      {toggleModal && (
+      <Pagination
+        items={allUser}
+        itemsCount={4}
+        pathname={"/users"}
+        setShowItems={setUsersShowPage}
+      />
+      {toggleAddModal && (
         <DetailsModal onClose={closeModalHandler}>
           <h2 className="text-xl font-bold">مشخصات کاربر جدید</h2>
-          <form className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-            <FormInput
-              typeInput="text"
-              titleFa="نام و نام خانوادگی"
-              titleEn="name"
-            />
-            <FormInput
-              typeInput="text"
-              titleFa="نام کاربری"
-              titleEn="username"
-            />
-            <FormInput typeInput="email" titleFa="ایمیل" titleEn="email" />
-            <FormInput typeInput="text" titleFa="شماره تماس" titleEn="phone" />
-            <FormInput
-              typeInput="password"
-              titleFa="پسورد"
-              titleEn="password"
-            />
-          </form>
-          <button className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
+          <form
+            onSubmit={handleSubmit1(formSubmitting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+          >
+            <div className="flex flex-col gap-2">
+              <label htmlFor="avatar" className="text-sm font-bold">
+                آواتار
+              </label>
+              <Controller
+                control={control1}
+                name={"avatar"}
+                render={({ field: { value, onChange, ...field } }) => {
+                  return (
+                    <input
+                      {...field}
+                      className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>,
+                      ) => {
+                        onChange(event.target.files?.[0]);
+                      }}
+                      type="file"
+                      id="avatar"
+                    />
+                  );
+                }}
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.avatar && errors1.avatar.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="text-sm font-bold">
+                نام
+              </label>
+              <input
+                id="name"
+                {...register1("name")}
+                type="text"
+                placeholder="name"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.name && errors1.name.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="username" className="text-sm font-bold">
+                نام کاربری
+              </label>
+              <input
+                id="usename"
+                {...register1("username")}
+                type="text"
+                placeholder="username"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.username && errors1.username.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-bold">
+                ایمیل
+              </label>
+              <input
+                id="email"
+                {...register1("email")}
+                type="email"
+                placeholder="email"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.email && errors1.email.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="phone" className="text-sm font-bold">
+                شماره تلفن
+              </label>
+              <input
+                id="phone"
+                {...register1("phone")}
+                type="text"
+                placeholder="phone"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.phone && errors1.phone.message}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-bold">
+                پسورد
+              </label>
+              <input
+                id="password"
+                {...register1("password")}
+                type="password"
+                placeholder="password"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.password && errors1.password.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="confirmPassword" className="text-sm font-bold">
+                پسورد
+              </label>
+              <input
+                id="confirmPassword"
+                {...register1("confirmPassword")}
+                type="password"
+                placeholder="confirmPassword"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.confirmPassword && errors1.confirmPassword.message}
+              </span>
+            </div>
+          
+          <button  type="submit" className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
             تایید
           </button>
+          </form>
         </DetailsModal>
       )}
+    
     </div>
   );
 }

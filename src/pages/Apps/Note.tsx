@@ -1,29 +1,76 @@
 import AddButton from "../../components/AddButton";
-import FormInput from "../../components/FormInput";
 import DetailsModal from "../../components/DetailsModal";
 import NoteCard from "../../components/NoteCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { NoteTypes } from "../../TypescriptTypes/NoteTypes";
+import { NoteFormType } from "../../TypescriptTypes/NoteTypes";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import NoteSchema from "../../validations/NoteSchema";
+import swal from "sweetalert";
 
 export default function Note() {
   const [toggleModal, setToggleModal] = useState<boolean>(false);
-  const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
-  const [toggleShowDetail, setToggleShowDetail] = useState<boolean>(false);
 
-  const closeDetailModalHandler = () => {
-    setToggleShowDetail(false);
+ 
+  const [allNote, setAllNote] = useState<NoteTypes[]>([]);
+
+  const {
+    register: register1,
+    reset: reset1,
+    handleSubmit: handleSubmit1,
+    formState: { errors: errors1 },
+  } = useForm({
+    defaultValues: {
+      subject: "",
+      body: "",
+    },
+    resolver: yupResolver(NoteSchema),
+  });
+
+
+
+  const getNotes = async () => {
+    const res = await fetch("http://localhost:4000/v1/notes", {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4`,
+      },
+    });
+    const data = await res.json();
+    setAllNote(data);
   };
 
-  const toggleDetailModalHandler = () => {
-    setToggleShowDetail((prev) => !prev);
+  useEffect(() => {
+    getNotes();
+  }, []);
+
+  const formSubmitting = async (data: NoteFormType, event: any) => {
+    event.preventDefault();
+
+    const res = await fetch("http://localhost:4000/v1/notes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcwODYyMzIxOSwiZXhwIjoxNzExMjE1MjE5fQ.b32-Qd9FPnAZ6je0qlZ61EJPeBqHf3BmYMXtNaTWhlQ`,
+      },
+      body: JSON.stringify({ subject: data.subject, body: data.body }),
+    });
+
+    if (res.status === 201) {
+      await res.json();
+      swal({
+        title: "یااداشت با موفقیت اضافه شد",
+        icon: "success",
+        buttons: "بستن" as any,
+      });
+      getNotes();
+      setToggleModal(false);
+    }
+
+    reset1();
   };
 
-  const closeEditModal = () => {
-    setToggleEditModal(false);
-  };
 
-  const toggleEditModalHandler = () => {
-    setToggleEditModal((prev) => !prev);
-  };
 
   const openModalHandler = () => {
     setToggleModal(true);
@@ -41,127 +88,64 @@ export default function Note() {
       />
       <div
         className="] h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
-    rounded-xl  bg-white  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
+    rounded-xl px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
       >
         <h2 className=" text-xl ">یادداشت ها</h2>
         <div className="grid grid-cols-1 gap-5 pt-4 md:grid-cols-2 lg:grid-cols-3">
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
-          <NoteCard
-            editModal={toggleEditModalHandler}
-            detailModal={toggleDetailModalHandler}
-          />
+          {allNote?.map((note) => (
+            <NoteCard
+              key={note._id}
+              data={note}
+              setAllNote={setAllNote}
+            />
+          ))}
         </div>
-
-        {/* edit note modal */}
-        {toggleEditModal && (
-          <DetailsModal onClose={closeEditModal}>
-            <h2 className="text-xl font-bold">ویرایش یادداشت</h2>
-            <form className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-              <FormInput typeInput="text" titleFa="عنوان" titleEn="subject" />
-              <FormInput typeInput="text" titleFa="متن" titleEn="text" />
-              <div className="flex flex-col gap-2">
-                <label htmlFor={"color"} className="text-sm font-bold">
-                  رنگ
-                </label>
-                <input
-                  id={"color"}
-                  type="color"
-                  placeholder="color"
-                  className="h-12 w-full bg-transparent  outline-none"
-                />
-              </div>
-            </form>
-            <button className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
-              تایید
-            </button>
-          </DetailsModal>
-        )}
       </div>
       {/* add new note modal */}
       {toggleModal && (
         <DetailsModal onClose={closeModalHandler}>
           <h2 className="text-xl font-bold">یادداشت جدید</h2>
-          <form className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-            <FormInput typeInput="text" titleFa="عنوان" titleEn="subject" />
-            <FormInput typeInput="text" titleFa="متن" titleEn="text" />
+          <form
+            onSubmit={handleSubmit1(formSubmitting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+          >
             <div className="flex flex-col gap-2">
-              <label htmlFor={"color"} className="text-sm font-bold">
-                رنگ
+              <label htmlFor="subject" className="text-sm font-bold">
+                عنوان یادداشت
               </label>
               <input
-                id={"color"}
-                type="color"
-                placeholder="color"
-                className="h-12 w-full bg-transparent  outline-none"
+                id="subject"
+                {...register1("subject")}
+                type="text"
+                placeholder="subject"
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.subject && errors1.subject.message}
+              </span>
             </div>
-          </form>
-          <button className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
-            تایید
-          </button>
-        </DetailsModal>
-      )}
 
-      {/* show detail note modal*/}
-      {toggleShowDetail && (
-        <DetailsModal onClose={closeDetailModalHandler}>
-          <div className="h-[80vh] mt-10 xs:mt-4 overflow-auto text-center rounded-xl border-b-2 border-b-primary-pk bg-lime-200 py-3 px-1 xs:p-3 shadow-xl">
-            <div className="flex w-full justify-between">
-              <div className="flex flex-col gap-x-3 xs:flex-row xs:items-center">
-                <img
-                  src="/images/user-04.jpg"
-                  alt="avatar"
-                  className="h-14 w-14 rounded-full"
-                />
-                <div className="text-sm">
-                  <p className="pb-1 font-semibold">نازنین رستگار</p>
-                  <p className="text-zinc-500">1402/11/18</p>
-                </div>
-              </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="body" className="text-sm font-bold">
+                متن یادداشت
+              </label>
+              <textarea
+                id="body"
+                {...register1("body")}
+                placeholder="note ..."
+                className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
+              ></textarea>
+              <span className="pt-1.5 text-sm text-red-600">
+                {errors1.body && errors1.body.message}
+              </span>
             </div>
-            <div className="w-full">
-              <h4 className="font-semobold pt-5 text-lg">عنوان یادداشت</h4>
-              <p className="pt-1 text-zinc-500">
-                لورم ایپسوم جهت تست متن یادداشت پنل مدیریت فروشگاهی لورم ایپسوم
-                جهت تست متن یادداشت پنل مدیریت فروشگاهی
-                لورم ایپسوم جهت تست متن یادداشت پنل مدیریت فروشگاهی لورم ایپسوم
-                جهت تست متن یادداشت پنل مدیریت فروشگاهی
-                لورم ایپسوم جهت تست متن یادداشت پنل مدیریت فروشگاهی لورم ایپسوم
-                جهت تست متن یادداشت پنل مدیریت فروشگاهی
-                لورم ایپسوم جهت تست متن یادداشت پنل مدیریت فروشگاهی لورم ایپسوم
-                جهت تست متن یادداشت پنل مدیریت فروشگاهی
-                لورم ایپسوم جهت تست متن یادداشت پنل مدیریت فروشگاهی لورم ایپسوم
-                جهت تست متن یادداشت پنل مدیریت فروشگاهی
-              </p>
-            </div>
-          </div>
+            <button
+              type="submit"
+              className="ms-auto h-12 w-40 rounded-xl bg-primary-y"
+            >
+              تایید
+            </button>
+          </form>
         </DetailsModal>
       )}
     </div>

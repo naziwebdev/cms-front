@@ -56,7 +56,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'user' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('user')}>
-          <Link to={'/users'} className="relative z-10 flex w-full gap-x-4  justify-start  text-2xl">
+          <Link to={'/users/1'} className="relative z-10 flex w-full gap-x-4  justify-start  text-2xl">
             <span className=""><HiMiniUsers /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>کاربران</span>
           </Link>
@@ -65,7 +65,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'off' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('off')}>
-          <Link to={'/offs'} className="relative z-10 flex w-full gap-x-4 justify-start  text-2xl">
+          <Link to={'/offs/1'} className="relative z-10 flex w-full gap-x-4 justify-start  text-2xl">
             <span className=""><MdLocalOffer /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>تخفیف ها</span>
           </Link>
@@ -83,7 +83,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'cm' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('cm')}>
-          <Link to={'/comments'} className="relative z-10 flex w-full gap-x-4  justify-start text-2xl">
+          <Link to={'/comments/1'} className="relative z-10 flex w-full gap-x-4  justify-start text-2xl">
             <span className=""><FaCommentDots /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>کامنت ها</span>
           </Link>
@@ -110,7 +110,7 @@ export default function Sidebar() {
         hover:text-primary-p hover:bg-secondery shape p-3
         ${currentLink == 'todo' && 'bg-secondery activeNav !text-primary-p '}`}
           onClick={() => setCurrentLink('todo')}>
-          <Link to={'/apps/todo'} className="relative z-10 flex w-full gap-x-4 justify-start text-2xl">
+          <Link to={'/apps/todo/1'} className="relative z-10 flex w-full gap-x-4 justify-start text-2xl">
             <span className=""><FaTasks /></span>
             <span className={`${toggle ? 'flex' : 'hidden'} text-lg`}>تودولیست</span>
           </Link>
