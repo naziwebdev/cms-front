@@ -10,6 +10,7 @@ import { UsersTypes } from "../TypescriptTypes/UserTypes";
 import { UserFormTypes } from "../TypescriptTypes/UserTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import swal from "sweetalert";
+import { convertToLatinNumber } from "../utils/convertorNum";
 
 type userProp = {
   data: UsersTypes[];
@@ -86,12 +87,13 @@ export default function UserTable({ data }: userProp) {
     event.preventDefault();
 
     let formData = new FormData();
+    const enPhone = convertToLatinNumber(data.phone)
 
     formData.append("avatar", data.avatar);
     formData.append("name", data.name);
     formData.append("username", data.username);
     formData.append("email", data.email);
-    formData.append("phone", data.phone);
+    formData.append("phone", enPhone);
     formData.append("password", data.password);
     formData.append("confirmPassword", data.confirmPassword);
 

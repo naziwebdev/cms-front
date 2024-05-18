@@ -73,6 +73,7 @@ export default function Costs() {
 
   const formSubmitting = async (data: CostFormTypes, event: any) => {
     event.preventDefault();
+   
     const res = await fetch("http://localhost:4000/v1/costs", {
       method: "POST",
       headers: {
@@ -235,7 +236,7 @@ export default function Costs() {
                 </td>
                 <td className="px-8">
                   <p className="text-zinc-700 ">
-                    {Number(cost.price).toLocaleString()} تومان
+                    {Number(cost.price).toLocaleString("fa-IR")} تومان
                   </p>
                   <p
                     className={`flex items-center  gap-x-2 pt-1.5 font-semibold 

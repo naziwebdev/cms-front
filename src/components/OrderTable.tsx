@@ -9,6 +9,7 @@ import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
 
 
+
 export default function OrderTable() {
   const [allOrders, setAllOrders] = useState<OrderTypes[]>([]);
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
@@ -93,6 +94,7 @@ export default function OrderTable() {
 
   const formEditSubmitting = async (data: orderFormTypes, event: any) => {
     event.preventDefault();
+  
 
     if (data.status === "در حال پردازش") {
       swal({
@@ -161,7 +163,7 @@ export default function OrderTable() {
                 />
               </td>
               <td className="">{order?.product?.title}</td>
-              <td className="">{order?.price.toLocaleString()} تومان </td>
+              <td className="">{order?.price.toLocaleString("fa-IR")} تومان </td>
               <td className="">{order?.user?.name}</td>
               <td className="">
                 {new Date(order.createdAt).toLocaleDateString("fa-IR", {

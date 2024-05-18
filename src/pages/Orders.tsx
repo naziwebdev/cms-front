@@ -1,8 +1,8 @@
 import AddButton from "../components/AddButton";
-import { useState} from "react";
+import { useState } from "react";
 import DetailsModal from "../components/DetailsModal";
-import { OrderTypes, orderFormTypes } from "../TypescriptTypes/OrderTypes";
-import { useForm} from "react-hook-form";
+import { orderFormTypes } from "../TypescriptTypes/OrderTypes";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
@@ -10,7 +10,6 @@ import OrderTable from "../components/OrderTable";
 
 export default function Orders() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
-  const [allOrders, setAllOrders] = useState<OrderTypes[]>([]);
 
   const {
     register: register1,
@@ -25,20 +24,6 @@ export default function Orders() {
     },
     resolver: yupResolver(OrderSchema),
   });
-
-
-  const getOrders = async () => {
-    const res = await fetch("http://localhost:4000/v1/orders", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
-    });
-
-    const data = await res.json();
-
-    setAllOrders(data);
-  };
 
   const formSubmitting = async (data: orderFormTypes, event: any) => {
     event.preventDefault();
@@ -61,8 +46,12 @@ export default function Orders() {
         title: "سفارش  با موفقیت اضافه شد",
         icon: "success",
         buttons: "بستن" as any,
+      }).then((value) => {
+        if (value) {
+          location.reload();
+        }
       });
-      getOrders();
+
       setToggleAddModal(false);
     }
 
@@ -77,21 +66,19 @@ export default function Orders() {
     setToggleAddModal(false);
   };
 
-  
-
   return (
     <div className=" xl:h-[calc(100vh-160px)]">
-        <AddButton
-          openModalHandler={openModalHandler}
-          title={"افزودن سفارش جدید"}
-        />
-   
+      <AddButton
+        openModalHandler={openModalHandler}
+        title={"افزودن سفارش جدید"}
+      />
+
       <div
         className="h-[70vh] w-[calc(100vw-90px)] overflow-x-auto
-      rounded-xl  bg-white dark:shadow-lg dark:shadow-zinc-700 shadow-lg shadow-zinc-300  px-2 py-4 xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh]"
+      rounded-xl  bg-white px-2 py-4 shadow-lg shadow-zinc-300  xs:w-[calc(100vw-130px)] xs:p-4 xl:h-[64vh] dark:shadow-lg dark:shadow-zinc-700"
       >
         <h1 className="px-4 pb-4 text-xl">لیست سفارشات</h1>
-        <OrderTable/>
+        <OrderTable />
       </div>
       {toggleAddModal && (
         <DetailsModal onClose={closeModalHandler}>
@@ -154,7 +141,6 @@ export default function Orders() {
           </form>
         </DetailsModal>
       )}
-      
     </div>
   );
 }

@@ -87,7 +87,6 @@ export default function AreachartBox() {
     
     setMainData(sortedData)
 
-    console.log(mainData)
   };
 
 

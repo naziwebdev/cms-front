@@ -1,4 +1,4 @@
-import UserTable  from "../components/UserTable";
+import UserTable from "../components/UserTable";
 import { useForm, Controller } from "react-hook-form";
 import UserSchema from "../validations/UserSchema";
 import AddButton from "../components/AddButton";
@@ -9,13 +9,12 @@ import { UserFormTypes } from "../TypescriptTypes/UserTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import swal from "sweetalert";
 import Pagination from "../components/Pagination";
-
+import { convertToLatinNumber } from "../utils/convertorNum";
 
 export default function Users() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
   const [allUser, setAllUser] = useState<UsersTypes[]>([]);
   const [usersShowPage, setUsersShowPage] = useState<UsersTypes[]>([]);
-
 
   const {
     register: register1,
@@ -31,12 +30,10 @@ export default function Users() {
       email: "",
       phone: "",
       password: "",
-      confirmPassword:""
+      confirmPassword: "",
     },
     resolver: yupResolver(UserSchema),
   });
-
- 
 
   const getUsers = async () => {
     const res = await fetch("http://localhost:4000/v1/users");
@@ -48,18 +45,20 @@ export default function Users() {
     getUsers();
   }, []);
 
-
-  const formSubmitting = (data:UserFormTypes,event:any) => {
-    event.preventDefault()
+  const formSubmitting = (data: UserFormTypes, event: any) => {
+    event.preventDefault();
     let formData = new FormData();
+
+    const enPhone = convertToLatinNumber(data.phone)
+  
 
     formData.append("avatar", data.avatar);
     formData.append("name", data.name);
     formData.append("username", data.username);
     formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("password",data.password)
-    formData.append("confirmPassword",data.confirmPassword)
+    formData.append("phone", enPhone);
+    formData.append("password", data.password);
+    formData.append("confirmPassword", data.confirmPassword);
 
     fetch("http://localhost:4000/v1/auth/register", {
       method: "POST",
@@ -74,7 +73,7 @@ export default function Users() {
         });
         getUsers();
         setToggleAddModal(false);
-      }else{
+      } else {
         swal({
           title: "عملیات با شکست مواجه شد",
           icon: "error",
@@ -84,9 +83,7 @@ export default function Users() {
     });
 
     reset1();
-  }
-
-
+  };
 
   const openModalHandler = () => {
     setToggleAddModal(true);
@@ -95,8 +92,6 @@ export default function Users() {
   const closeModalHandler = () => {
     setToggleAddModal(false);
   };
-
-
 
   return (
     <div className="">
@@ -107,9 +102,9 @@ export default function Users() {
 
       <div
         className=" mt-10 w-[calc(100vw-90px)] overflow-x-auto
-      bg-transparent xs:w-[calc(100vw-130px)] shadow-lg shadow-zinc-200 dark:shadow-lg dark:shadow-zinc-700"
+      bg-transparent shadow-lg shadow-zinc-200 xs:w-[calc(100vw-130px)] dark:shadow-lg dark:shadow-zinc-700"
       >
-          <h2 className="pb-4 text-xl dark:text-zinc-100">لیست کاربران</h2>
+        <h2 className="pb-4 text-xl dark:text-zinc-100">لیست کاربران</h2>
         <UserTable data={usersShowPage} />
       </div>
       <Pagination
@@ -246,14 +241,16 @@ export default function Users() {
                 {errors1.confirmPassword && errors1.confirmPassword.message}
               </span>
             </div>
-          
-          <button  type="submit" className="ms-auto h-12 w-40 rounded-xl bg-primary-y">
-            تایید
-          </button>
+
+            <button
+              type="submit"
+              className="ms-auto h-12 w-40 rounded-xl bg-primary-y"
+            >
+              تایید
+            </button>
           </form>
         </DetailsModal>
       )}
-    
     </div>
   );
 }

@@ -290,7 +290,7 @@ export default function Offs() {
                   <p className="py-1.5 font-bold text-zinc-800">{off.code}</p>
                 </td>
                 <td className="px-8 ">
-                  <p className="font-semibold text-green-500">{off.percent}%</p>
+                  <p className="font-semibold text-green-500">{off.percent.toLocaleString("fa-IR")}%</p>
                 </td>
                 <td className="px-8">
                   <p className="">
@@ -298,10 +298,10 @@ export default function Offs() {
                   </p>
                 </td>
                 <td className="px-8">
-                  <p className="">{off.maxUsage}</p>
+                  <p className="">{off.maxUsage.toLocaleString("fa-IR")}</p>
                 </td>
                 <td className="px-8">
-                  <p className="">{off.countUsaged}</p>
+                  <p className="">{off.countUsaged.toLocaleString("fa-IR")}</p>
                 </td>
                 <td className="px-8">
                   <div className="flex gap-x-4">

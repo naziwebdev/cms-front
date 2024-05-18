@@ -18,7 +18,6 @@ export default function Products() {
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
   const [productEditValue, setProductEditValue] = useState<productsTypes>();
 
-
   const {
     register: register1,
     reset: reset1,
@@ -57,10 +56,14 @@ export default function Products() {
     event.preventDefault();
 
     let formData = new FormData();
+    const enPrice = data.price.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d: any): any {
+      return d.charCodeAt(0) - 1776;
+    });
+ 
 
     formData.append("cover", data.cover);
     formData.append("title", data.title);
-    formData.append("price", data.price);
+    formData.append("price", enPrice);
     formData.append("href", data.href);
     formData.append("categoryId", data.categoryId);
 
@@ -119,10 +122,13 @@ export default function Products() {
     event.preventDefault();
 
     let formData = new FormData();
+    const enPrice = data.price.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d: any): any {
+      return d.charCodeAt(0) - 1776;
+    });
 
     formData.append("cover", data.cover);
     formData.append("title", data.title);
-    formData.append("price", data.price);
+    formData.append("price", enPrice);
     formData.append("href", data.href);
     formData.append("categoryId", data.categoryId);
 
@@ -182,8 +188,8 @@ export default function Products() {
         title={"افزودن محصول جدید"}
       />
       <div
-        className="border-zinc-300/3 h-[70vh]  w-[calc(100vw-90px)] overflow-x-auto rounded-2xl border-2 bg-white dark:shadow-lg dark:shadow-zinc-700 shadow-lg shadow-zinc-300 xs:w-[calc(100vw-130px)] 
-      xl:h-[64vh]"
+        className="border-zinc-300/3 h-[70vh]  w-[calc(100vw-90px)] overflow-x-auto rounded-2xl border-2 bg-white shadow-lg shadow-zinc-300 xs:w-[calc(100vw-130px)] xl:h-[64vh] dark:shadow-lg 
+      dark:shadow-zinc-700"
       >
         <h2 className="p-2 px-4 text-lg ">محصولات</h2>
         <table className="w-full text-sm md:text-base">
@@ -211,7 +217,7 @@ export default function Products() {
                   />
                 </td>
                 <td>{product.title}</td>
-                <td>{Number(product.price)?.toLocaleString()} تومان </td>
+                <td>{Number(product.price)?.toLocaleString("fa-IR")} تومان </td>
                 <td>{product.categoryId.title}</td>
                 <td>
                   <button onClick={() => editProductHandler(product)}>
