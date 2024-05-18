@@ -1,10 +1,26 @@
-
-import { BarChart, Bar, Cell, XAxis, YAxis,ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
 import { useState, useEffect } from "react";
 
-const colors = [ "pink",'#581c87','#a3e635', "#0088FE", "#00C49F", "#FF8042", "red"  
-,'black','#38bdf8','#d946ef','#d4d4d8'];
-
+const colors = [
+  "pink",
+  "#581c87",
+  "#a3e635",
+  "#0088FE",
+  "#00C49F",
+  "#FF8042",
+  "red",
+  "black",
+  "#38bdf8",
+  "#d946ef",
+  "#d4d4d8",
+];
 
 type barchartData = {
   numberofdocuments: number;
@@ -25,40 +41,72 @@ const TriangleBar = (props: any) => {
 };
 
 export default function BarChartBox() {
-  const [barchartData, setBarchartData] = useState<barchartData[]>(
-    [],
-  );
+  const [barchartData, setBarchartData] = useState<barchartData[]>([]);
 
   const getBarchartData = async () => {
     const res = await fetch("http://localhost:4000/v1/orders/report", {
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZDc4NTcyZDdjMjE4YTVkZDY3MTAyYyIsImlhdCI6MTcxMTU2NTE5NSwiZXhwIjoxNzE0MTU3MTk1fQ.20k8OOxivVVwnjcEfdhAd87QbsWF1AA1Kp3M0oA2ak4",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
       },
     });
 
     if (res.status === 200) {
       const data = await res.json();
-      setBarchartData(data);
+      const monthMapping: any = {
+        January: "دی",
+        February: "بهمن",
+        March: "اسفند",
+        April: "فروردین",
+        May: "اردیبهشت",
+        June: "خرداد",
+        July: "تیر",
+        August: "مرداد",
+        September: "شهریور",
+        October: "مهر",
+        November: "آبان",
+        December: "آذر",
+      };
+
+      const convertMonth = data.map((item: any) => {
+        const persianMonth = monthMapping[item.month];
+        return { ...item, month: persianMonth };
+      });
+
+      const monthOrder: any = {
+        فروردین: 1,
+        اردیبهشت: 2,
+        خرداد: 3,
+        تیر: 4,
+        مرداد: 5,
+        شهریور: 6,
+        مهر: 7,
+        آبان: 8,
+        آذر: 9,
+        دی: 10,
+        بهمن: 11,
+        اسفند: 12,
+      };
+
+      const sortedData = convertMonth.sort((a: any, b: any) => {
+        return monthOrder[a.month] - monthOrder[b.month];
+      });
+
+      setBarchartData(sortedData);
     }
   };
 
-
   useEffect(() => {
-   getBarchartData()
-  },[])
-
-
+    getBarchartData();
+  }, []);
 
   return (
     <div className="">
-      <h2 className="ps-2 pb-4 text-base 2xs:text-lg font-semibold dark:text-zinc-200 text-stone-700">
+      <h2 className="pb-4 ps-2 text-base font-semibold text-stone-700 2xs:text-lg dark:text-zinc-200">
         فروش ماهانه :
       </h2>
       <ResponsiveContainer width="112%" height={400}>
-        <BarChart
-          data={barchartData}    
-        >
+        <BarChart data={barchartData}>
           <XAxis dataKey="month" />
           <YAxis />
           <Bar
