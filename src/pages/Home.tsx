@@ -37,10 +37,7 @@ export default function Home() {
 
   const getLinechartDataUser = async () => {
     const res = await fetch("http://localhost:4000/v1/users/report", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {
@@ -51,10 +48,7 @@ export default function Home() {
 
   const getLinechartDataSale = async () => {
     const res = await fetch("http://localhost:4000/v1/orders/report", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {
@@ -65,10 +59,7 @@ export default function Home() {
 
   const getLinechartDataCost = async () => {
     const res = await fetch("http://localhost:4000/v1/costs/report", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {
@@ -78,10 +69,7 @@ export default function Home() {
   };
   const getLinechartDataProduct = async () => {
     const res = await fetch("http://localhost:4000/v1/products/report", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {

@@ -27,10 +27,7 @@ export default function Calender() {
 
   const getEvents = async () => {
     const res = await fetch("http://localhost:4000/v1/events", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
     if (res.status === 200) {
       const data = await res.json();
@@ -136,9 +133,9 @@ export default function Calender() {
 
     const res = await fetch("http://localhost:4000/v1/events", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
       },
       body: JSON.stringify({
         title: data.title,
@@ -183,9 +180,9 @@ export default function Calender() {
       `http://localhost:4000/v1/events/${eventInfoEdit?._id}`,
       {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
         },
         body: JSON.stringify({
           title: data.title,
@@ -230,9 +227,7 @@ export default function Calender() {
       if (value === true) {
         const res = await fetch(`http://localhost:4000/v1/events/${eventID}`, {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-          },
+          credentials: "include",
         });
 
         if (res.status === 200) {
@@ -286,7 +281,7 @@ export default function Calender() {
           <div className="w-full md:w-1/2 lg:w-1/3">
             <TodayEventsBox />
           </div>
-          
+
           <div className="flex-1">
             <Calendar
               mapDays={({ date }) => {
@@ -296,7 +291,7 @@ export default function Calender() {
 
                 if (color) return { className: "highlight highlight-" + color };
               }}
-              className="purple w-full  bg-fuchsia-300 dark:shadow-lg dark:shadow-zinc-700 shadow-xl shadow-zinc-400"
+              className="purple w-full  bg-fuchsia-300 shadow-xl shadow-zinc-400 dark:shadow-lg dark:shadow-zinc-700"
               calendar={persian}
               locale={persian_fa}
             />

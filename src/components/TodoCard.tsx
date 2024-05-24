@@ -48,9 +48,9 @@ export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
       `http://localhost:4000/v1/todos/${todoInfoEdit?._id}`,
       {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
         },
         body: JSON.stringify({
           title: data.title,
@@ -93,9 +93,7 @@ export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
       if (value === true) {
         const res = await fetch(`http://localhost:4000/v1/todos/${todoID}`, {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-          },
+          credentials: "include",
         });
 
         if (res.status === 200) {
@@ -124,10 +122,7 @@ export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
 
   const getTodos = async () => {
     const res = await fetch("http://localhost:4000/v1/todos", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
     if (res.status === 200) {
       const data = await res.json();
@@ -140,9 +135,9 @@ export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
   const tickTodoHandler = async (todoID: string) => {
     const res = await fetch(`http://localhost:4000/v1/todos/${todoID}/do`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
       },
     });
 
@@ -154,9 +149,7 @@ export default function TodoCard({ todo, setAllTodo }: TodoPropsTypes) {
   const toggleStarHadnler = async (todoID: string) => {
     const res = await fetch(`http://localhost:4000/v1/todos/star/${todoID}`, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {

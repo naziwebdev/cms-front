@@ -7,10 +7,11 @@ import UserSchema from "../validations/UserSchema";
 import { useState, useEffect } from "react";
 import DetailsModal from "../components/DetailsModal";
 import { UsersTypes } from "../TypescriptTypes/UserTypes";
-import { UserFormTypes } from "../TypescriptTypes/UserTypes";
+import { UserEditFormTypes } from "../TypescriptTypes/UserTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import swal from "sweetalert";
 import { convertToLatinNumber } from "../utils/convertorNum";
+
 
 type userProp = {
   data: UsersTypes[];
@@ -83,7 +84,7 @@ export default function UserTable({ data }: userProp) {
     setToggleEditModal(true);
   };
 
-  const editFormSubmiting = (data: UserFormTypes, event: any) => {
+  const editFormSubmiting = (data:UserEditFormTypes, event: any) => {
     event.preventDefault();
 
     let formData = new FormData();

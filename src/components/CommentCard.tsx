@@ -13,9 +13,6 @@ import swal from "sweetalert";
 import { useState } from "react";
 import { CommentReplyType } from "../TypescriptTypes/CommentTpes";
 
-
-
-
 type CommentPropsTtpes = {
   comment: CommentTypes;
   setAllComments: (value: CommentTypes[]) => void;
@@ -26,7 +23,7 @@ export default function CommentCard({
   setAllComments,
 }: CommentPropsTtpes) {
   const [ToggleReplyModal, setToggleReplyModal] = useState<boolean>(false);
-  const [commentIDReply,setCommentIDReply] = useState<string>()
+  const [commentIDReply, setCommentIDReply] = useState<string>();
 
   const {
     register,
@@ -48,12 +45,13 @@ export default function CommentCard({
       `http://localhost:4000/v1/comments/${commentIDReply}/answer`,
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
         },
-        body: JSON.stringify({title: data.title, body: data.body }),
-      },)
+        body: JSON.stringify({ title: data.title, body: data.body }),
+      },
+    );
 
     if (res.status === 201) {
       await res.json();
@@ -63,24 +61,19 @@ export default function CommentCard({
         buttons: "بستن" as any,
       });
       getComments();
-      setToggleReplyModal(false)
+      setToggleReplyModal(false);
     }
 
     reset();
   };
 
-
   const closeModalHandler = () => {
     setToggleReplyModal(false);
-
   };
 
   const getComments = async () => {
     const res = await fetch("http://localhost:4000/v1/comments", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      credentials: "include",
     });
     if (res.status === 200) {
       const data = await res.json();
@@ -95,10 +88,7 @@ export default function CommentCard({
       `http://localhost:4000/v1/comments/${commentID}/accept`,
       {
         method: "PUT",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-        },
+        credentials: "include",
       },
     );
 
@@ -138,9 +128,7 @@ export default function CommentCard({
           `http://localhost:4000/v1/comments/${commentID}`,
           {
             method: "DELETE",
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-            },
+            credentials: "include",
           },
         );
 
@@ -168,10 +156,7 @@ export default function CommentCard({
       `http://localhost:4000/v1/comments/${commentID}/reject`,
       {
         method: "PUT",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-        },
+        credentials: "include",
       },
     );
 
@@ -202,7 +187,7 @@ export default function CommentCard({
 
   const answerCommentHandler = async (commentID: string) => {
     setToggleReplyModal((prev) => !prev);
-    setCommentIDReply(commentID)
+    setCommentIDReply(commentID);
   };
 
   return (
@@ -247,7 +232,7 @@ export default function CommentCard({
         <h3 className="hidden text-sm font-semibold text-zinc-800 xs:text-lg sm:flex">
           {comment.title}
         </h3>
-        <div className="flex self-start text-[.8rem] text-yellow-400 xs:text-xl sm:me-12 sm:self-center pt-1 sm:pt-0">
+        <div className="flex self-start pt-1 text-[.8rem] text-yellow-400 xs:text-xl sm:me-12 sm:self-center sm:pt-0">
           {new Array(comment.score).fill(0).map((star) => (
             <FaStar key={crypto.randomUUID()} />
           ))}
@@ -317,7 +302,7 @@ export default function CommentCard({
             </div>
             <button
               type="submit"
-              className="ms-auto h-12 w-40 rounded-xl bg-primary-y mt-5"
+              className="ms-auto mt-5 h-12 w-40 rounded-xl bg-primary-y"
             >
               تایید
             </button>

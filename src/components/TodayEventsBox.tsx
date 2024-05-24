@@ -16,9 +16,7 @@ export default function TodayEventsBox() {
 
   const getTodayEvents = async () => {
     const res = await fetch("http://localhost:4000/v1/events/today", {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-      },
+      credentials: "include",
     });
     const data = await res.json();
     setTodayEvents(data);

@@ -21,5 +21,15 @@ export interface UserFormTypes {
   email: string;
   phone: string;
   password: string;
-  confirmPassword:string;
+  confirmPassword: string;
+}
+
+export interface UserEditFormTypes {
+  avatar?: any;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  password?:any;
+  confirmPassword?:any;
 }

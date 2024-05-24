@@ -144,7 +144,7 @@ export default function Users() {
                 }}
               />
               <span className="pt-1.5 text-sm text-red-600">
-                {errors1.avatar && errors1.avatar.message}
+                {errors1?.avatar && errors1?.avatar?.message}
               </span>
             </div>
 

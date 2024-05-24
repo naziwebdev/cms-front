@@ -35,6 +35,8 @@ export default function Products() {
     resolver: yupResolver(productSchema),
   });
 
+  console.log(productEditValue);
+
   const {
     register: register2,
     reset: reset2,
@@ -47,7 +49,7 @@ export default function Products() {
       title: productEditValue?.title,
       price: productEditValue?.price,
       href: productEditValue?.href,
-      categoryId: "",
+      categoryId: productEditValue?.categoryId?._id,
     },
     resolver: yupResolver(productSchema),
   });
@@ -59,7 +61,6 @@ export default function Products() {
     const enPrice = data.price.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d: any): any {
       return d.charCodeAt(0) - 1776;
     });
- 
 
     formData.append("cover", data.cover);
     formData.append("title", data.title);
@@ -122,20 +123,23 @@ export default function Products() {
     event.preventDefault();
 
     let formData = new FormData();
-    const enPrice = data.price.replace(/[۰۱۲۳۴۵۶۷۸۹]/g, function (d: any): any {
-      return d.charCodeAt(0) - 1776;
-    });
+    const enPrice = data?.price.replace(
+      /[۰۱۲۳۴۵۶۷۸۹]/g,
+      function (d: any): any {
+        return d.charCodeAt(0) - 1776;
+      },
+    );
 
-    formData.append("cover", data.cover);
-    formData.append("title", data.title);
+    formData.append("cover", data?.cover);
+    formData.append("title", data?.title);
     formData.append("price", enPrice);
-    formData.append("href", data.href);
-    formData.append("categoryId", data.categoryId);
+    formData.append("href", data?.href);
+    formData.append("categoryId", data?.categoryId);
 
     fetch(`http://localhost:4000/v1/products/${productEditValue?._id}`, {
       method: "PUT",
       body: formData,
-    }).then((res) => {
+    }).then(async (res) => {
       if (res.status === 200) {
         res.json();
         swal({
@@ -145,6 +149,13 @@ export default function Products() {
         });
         getProducts();
         setToggleEditModal(false);
+      } else {
+        swal({
+          title: "عملیات با شکست مواجه شد",
+          icon: "error",
+          buttons: "بستن" as any,
+        });
+        console.log(await res);
       }
     });
 
@@ -322,7 +333,6 @@ export default function Products() {
               <Controller
                 name="categoryId"
                 control={control1}
-                defaultValue=""
                 rules={{ required: true }}
                 render={({ field }) => (
                   <select
@@ -450,17 +460,18 @@ export default function Products() {
               </label>
               <Controller
                 name="categoryId"
+                defaultValue={productEditValue?.categoryId._id}
                 control={control2}
-                defaultValue=""
                 rules={{ required: true }}
                 render={({ field }) => (
                   <select
                     {...field}
                     id="category"
+                    defaultValue={productEditValue?.categoryId._id}
                     className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
                   >
-                    <option value={"-1"} className="bg-primary-p text-white">
-                      دسته بندی را انتخاب کنید
+                    <option selected className="bg-primary-p text-white">
+                      {productEditValue?.categoryId.title}
                     </option>
                     {categories.map((category) => (
                       <>

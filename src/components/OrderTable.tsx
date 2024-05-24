@@ -8,8 +8,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
 
-
-
 export default function OrderTable() {
   const [allOrders, setAllOrders] = useState<OrderTypes[]>([]);
   const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
@@ -37,7 +35,6 @@ export default function OrderTable() {
     resolver: yupResolver(OrderSchema),
   });
 
-
   const closeEditModal = () => {
     setToggleEditModal(false);
     window.location.reload();
@@ -49,13 +46,12 @@ export default function OrderTable() {
 
   const getOrders = async () => {
     const res = await fetch("http://localhost:4000/v1/orders", {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY",
-      },
+      method: "GET",
+      credentials: "include",
     });
 
     const data = await res.json();
+    
 
     setAllOrders(data);
   };
@@ -69,9 +65,7 @@ export default function OrderTable() {
       if (value === true) {
         const res = await fetch(`http://localhost:4000/v1/orders/${orderID}`, {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-          },
+          credentials: "include",
         });
 
         if (res.status === 200) {
@@ -94,7 +88,6 @@ export default function OrderTable() {
 
   const formEditSubmitting = async (data: orderFormTypes, event: any) => {
     event.preventDefault();
-  
 
     if (data.status === "در حال پردازش") {
       swal({
@@ -107,9 +100,9 @@ export default function OrderTable() {
         `http://localhost:4000/v1/orders/${orderEditInfo?._id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
           },
           body: JSON.stringify({
             product: data?.product,
@@ -152,7 +145,7 @@ export default function OrderTable() {
             <th className="min-w-[100px] ">عملیات</th>
           </tr>
         </thead>
-        <tbody >
+        <tbody>
           {allOrders?.map((order) => (
             <tr key={order._id} className="text-center">
               <td className=" py-1">
@@ -163,7 +156,9 @@ export default function OrderTable() {
                 />
               </td>
               <td className="">{order?.product?.title}</td>
-              <td className="">{order?.price.toLocaleString("fa-IR")} تومان </td>
+              <td className="">
+                {order?.price.toLocaleString("fa-IR")} تومان{" "}
+              </td>
               <td className="">{order?.user?.name}</td>
               <td className="">
                 {new Date(order.createdAt).toLocaleDateString("fa-IR", {

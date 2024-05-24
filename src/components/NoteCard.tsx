@@ -52,9 +52,7 @@ export default function NoteCard({ data, setAllNote }: ModalType) {
 
   const getNotes = async () => {
     const res = await fetch("http://localhost:4000/v1/notes", {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-      },
+      credentials: "include",
     });
     const notes = await res.json();
     setAllNote(notes);
@@ -72,9 +70,9 @@ export default function NoteCard({ data, setAllNote }: ModalType) {
       `http://localhost:4000/v1/notes/${noteEditInfo?._id}`,
       {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
         },
         body: JSON.stringify({ subject: data.subject, body: data.body }),
       },
@@ -110,9 +108,7 @@ export default function NoteCard({ data, setAllNote }: ModalType) {
       if (value === true) {
         const res = await fetch(`http://localhost:4000/v1/notes/${noteID}`, {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-          },
+          credentials: "include",
         });
 
         if (res.status === 200) {
@@ -131,9 +127,7 @@ export default function NoteCard({ data, setAllNote }: ModalType) {
   const toggleStarHadnler = async (noteID: string) => {
     const res = await fetch(`http://localhost:4000/v1/notes/star/${noteID}`, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWVkYjE5YjQxZDE0NmQ3ZWY3N2NkMyIsImlhdCI6MTcxNTk2NjUyNywiZXhwIjoxNzE4NTU4NTI3fQ.oBGAf4B6F8rimiZnEVTkAj-OvWFzYA0jYtkOnIyNgsY`,
-      },
+      credentials: "include",
     });
 
     if (res.status === 200) {
