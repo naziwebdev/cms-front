@@ -3,14 +3,15 @@ import { MdEditSquare } from "react-icons/md";
 import { MdAppBlocking } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
 import { useForm, Controller } from "react-hook-form";
-import UserSchema from "../validations/UserSchema";
 import { useState, useEffect } from "react";
 import DetailsModal from "../components/DetailsModal";
-import { UsersTypes } from "../TypescriptTypes/UserTypes";
+import { UsersTypes , UserPassEdit} from "../TypescriptTypes/UserTypes";
 import { UserEditFormTypes } from "../TypescriptTypes/UserTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import swal from "sweetalert";
 import { convertToLatinNumber } from "../utils/convertorNum";
+import { UserEditSchema } from "../validations/UserSchema";
+import {changePasswordSchema} from '../validations/UserSchema'
 
 
 type userProp = {
@@ -35,10 +36,23 @@ export default function UserTable({ data }: userProp) {
       username: userEditValue?.username,
       email: userEditValue?.email,
       phone: userEditValue?.phone,
+    },
+    resolver: yupResolver(UserEditSchema),
+  });
+
+
+  const {
+    register: register3,
+    reset: reset3,
+    control: control3,
+    handleSubmit: handleSubmit3,
+    formState: { errors: errors3 },
+  } = useForm({
+    defaultValues: {
       password: "",
       confirmPassword: "",
     },
-    resolver: yupResolver(UserSchema),
+    resolver: yupResolver(changePasswordSchema),
   });
 
   const getUsers = async () => {
@@ -95,8 +109,6 @@ export default function UserTable({ data }: userProp) {
     formData.append("username", data.username);
     formData.append("email", data.email);
     formData.append("phone", enPhone);
-    formData.append("password", data.password);
-    formData.append("confirmPassword", data.confirmPassword);
 
     fetch(`http://localhost:4000/v1/users/${userEditValue?._id}`, {
       method: "PUT",
@@ -196,6 +208,44 @@ export default function UserTable({ data }: userProp) {
     setToggleEditModal(false);
     window.location.reload();
   };
+
+ const  editPassSubmiting = (data:UserPassEdit, event: any) => {
+  event.preventDefault()
+
+  fetch(`http://localhost:4000/v1/users/${userEditValue?._id}/password`, {
+      method: "PUT",
+      headers:{
+        'content-type':'application/json'
+      },
+      body: JSON.stringify({
+        password: data.password,
+        confirmPassword:data.confirmPassword
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        res.json();
+        swal({
+          title: "پسورد با موفقیت ویرایش شد",
+          icon: "success",
+          buttons: "بستن" as any,
+        }).then((result) => {
+          if (result === true) {
+            getUsers();
+            setToggleEditModal(false);
+            window.location.reload();
+            reset2();
+          }
+        });
+      } else {
+        swal({
+          title: "عملیات با شکست مواجه شد",
+          icon: "error",
+          buttons: "بستن" as any,
+        });
+      }
+    });
+
+ }
 
   return (
     <div className="overflow-auto">
@@ -363,7 +413,7 @@ export default function UserTable({ data }: userProp) {
           <h2 className="text-xl font-bold">ویرایش مشخصات کاربر</h2>
           <form
             onSubmit={handleSubmit2(editFormSubmiting)}
-            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+            className="mt-5 grid w-full grid-cols-1 gap-2 gap-x-24 p-5 xs:grid-cols-2 lg:gap-6 "
           >
             <div className="flex flex-col gap-2">
               <label htmlFor="avatar" className="text-sm font-bold">
@@ -459,20 +509,30 @@ export default function UserTable({ data }: userProp) {
                 {errors2.phone && errors2.phone.message}
               </span>
             </div>
-
+            <button
+              type="submit"
+              className="ms-auto h-12 w-40 rounded-xl bg-primary-y"
+            >
+              تایید
+            </button>
+          </form>
+            <form
+            onSubmit={handleSubmit3(editPassSubmiting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-6 "
+          >
             <div className="flex flex-col gap-2">
               <label htmlFor="password" className="text-sm font-bold">
                 پسورد جدید
               </label>
               <input
                 id="password"
-                {...register2("password")}
+                {...register3("password")}
                 type="password"
                 placeholder="password"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
               <span className="pt-1.5 text-sm text-red-600">
-                {errors2.password && errors2.password.message}
+                {errors3.password && errors3.password.message}
               </span>
             </div>
             <div className="flex flex-col gap-2">
@@ -481,23 +541,22 @@ export default function UserTable({ data }: userProp) {
               </label>
               <input
                 id="confirmPassword"
-                {...register2("confirmPassword")}
+                {...register3("confirmPassword")}
                 type="password"
                 placeholder="confirmPassword"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
               <span className="pt-1.5 text-sm text-red-600">
-                {errors2.confirmPassword && errors2.confirmPassword.message}
+                {errors3.confirmPassword && errors3.confirmPassword.message}
               </span>
             </div>
-
             <button
               type="submit"
-              className="ms-auto h-12 w-40 rounded-xl bg-primary-y"
+              className="col-span-2 ms-auto h-12 w-40 rounded-xl bg-primary-y"
             >
               تایید
             </button>
-          </form>
+            </form>
         </DetailsModal>
       )}
     </div>

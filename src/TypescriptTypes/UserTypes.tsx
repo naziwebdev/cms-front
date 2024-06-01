@@ -30,6 +30,10 @@ export interface UserEditFormTypes {
   username: string;
   email: string;
   phone: string;
-  password?:any;
-  confirmPassword?:any;
+}
+
+
+export interface UserPassEdit {
+  password: string;
+  confirmPassword: string;
 }
