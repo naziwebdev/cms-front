@@ -11,6 +11,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/purple.css";
 import swal from "sweetalert";
+import { convertToLatinNumber } from "../utils/convertorNum";
 
 export default function Costs() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
@@ -29,7 +30,7 @@ export default function Costs() {
       title: "",
       status: "",
       date:"",
-      price:0,
+      price:"",
     },
     resolver: yupResolver(CostSchema) as any,
   });
@@ -74,6 +75,7 @@ export default function Costs() {
   const formSubmitting = async (data: CostFormTypes, event: any) => {
     event.preventDefault();
    
+  const enPrice = convertToLatinNumber(data.price)
     const res = await fetch("http://localhost:4000/v1/costs", {
       method: "POST",
       credentials: "include",
@@ -84,7 +86,7 @@ export default function Costs() {
         title: data.title,
         status: data.status,
         date: data.date,
-        price: data.price,
+        price:Number(enPrice),
       }),
     });
 
@@ -109,6 +111,7 @@ export default function Costs() {
   };
   
   const formEditSubmitting = async (data: CostFormTypes, event: any) => {
+    const enPrice = convertToLatinNumber(data.price)
     event.preventDefault();
     const res = await fetch(`http://localhost:4000/v1/costs/${costInfoEdit?._id}`, {
       method: "PUT",
@@ -120,7 +123,7 @@ export default function Costs() {
         title: data.title,
         status: data.status,
         date: data.date,
-        price: data.price,
+        price:Number(enPrice),
       }),
     });
 

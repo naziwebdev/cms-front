@@ -4,7 +4,7 @@ import { UsersTypes } from "./UserTypes";
 export interface OrderTypes {
   _id: string;
   product: productsTypes;
-  price: number;
+  price: number | string;
   status: string;
   user: UsersTypes;
   createdAt: string;
@@ -14,7 +14,7 @@ export interface OrderTypes {
 
 export interface orderFormTypes {
   product:string;
-  price: number;
+  price:string | number;
   user:string;
   status?:string;
 }

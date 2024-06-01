@@ -12,11 +12,11 @@ export interface OffTypes {
 
 export interface offFormTypes {
   code: string;
-  percent: number;
-  expireDay: number;
-  maxUsage: number;
+  percent:string;
+  expireDay:string;
+  maxUsage:string;
 }
 
 export interface allOffFormTypes {
-  percent: number;
+  percent:string;
 }

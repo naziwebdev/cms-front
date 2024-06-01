@@ -3,7 +3,12 @@ import { IoMdAddCircle } from "react-icons/io";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { MdEditSquare } from "react-icons/md";
 import { useState, useEffect } from "react";
-import { OffTypes, offFormTypes , allOffFormTypes } from "../TypescriptTypes/OffTypes";
+import { convertToLatinNumber } from "../utils/convertorNum";
+import {
+  OffTypes,
+  offFormTypes,
+  allOffFormTypes,
+} from "../TypescriptTypes/OffTypes";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { allOffSchema } from "../validations/OffSchema";
@@ -27,9 +32,9 @@ export default function Offs() {
   } = useForm({
     defaultValues: {
       code: "",
-      percent: 0,
-      expireDay: 0,
-      maxUsage: 0,
+      percent: "",
+      expireDay: "",
+      maxUsage: "",
     },
     resolver: yupResolver(OffSchema),
   });
@@ -45,8 +50,8 @@ export default function Offs() {
       percent: offEditInfo?.percent,
       expireDay: offEditInfo?.expireDay,
       maxUsage: offEditInfo?.maxUsage,
-    }as offFormTypes,
-    resolver: yupResolver(OffSchema),
+    } as OffTypes,
+    resolver: yupResolver(OffSchema) as any,
   });
 
   const {
@@ -56,7 +61,7 @@ export default function Offs() {
     formState: { errors: errors3 },
   } = useForm({
     defaultValues: {
-      percent:0,
+      percent: "",
     },
     resolver: yupResolver(allOffSchema),
   });
@@ -84,7 +89,7 @@ export default function Offs() {
   const toggleEditModalHandler = () => {
     setToggleEditOffModal((prev) => !prev);
   };
-  
+
   const getOffs = async () => {
     const res = await fetch("http://localhost:4000/v1/offs", {
       credentials: "include",
@@ -113,6 +118,11 @@ export default function Offs() {
 
   const formSubmitting = async (data: offFormTypes, event: any) => {
     event.preventDefault();
+
+    const enPercent = convertToLatinNumber(data.percent);
+    const enExp = convertToLatinNumber(data.expireDay);
+    const enUsage = convertToLatinNumber(data.maxUsage);
+
     const res = await fetch("http://localhost:4000/v1/offs", {
       method: "POST",
       credentials: "include",
@@ -121,9 +131,9 @@ export default function Offs() {
       },
       body: JSON.stringify({
         code: data.code,
-        percent: data.percent,
-        expireDay: data.expireDay,
-        maxUsage: data.maxUsage,
+        percent: Number(enPercent),
+        expireDay: Number(enExp),
+        maxUsage: Number(enUsage),
       }),
     });
 
@@ -141,8 +151,10 @@ export default function Offs() {
     reset1();
   };
 
-  const formAllOffSubmitting = async (data:allOffFormTypes, event: any) => {
+  const formAllOffSubmitting = async (data: allOffFormTypes, event: any) => {
     event.preventDefault();
+
+    const enPercent = convertToLatinNumber(data.percent);
     const res = await fetch("http://localhost:4000/v1/offs/all", {
       method: "PUT",
       credentials: "include",
@@ -150,7 +162,7 @@ export default function Offs() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        percent: data.percent, 
+        percent: Number(enPercent),
       }),
     });
 
@@ -168,7 +180,6 @@ export default function Offs() {
     reset3();
   };
 
-
   const removeOffHandler = (offID: string) => {
     swal({
       title: "آیا از حذف اطمینان دارید؟",
@@ -179,7 +190,6 @@ export default function Offs() {
         const res = await fetch(`http://localhost:4000/v1/offs/${offID}`, {
           method: "DELETE",
           credentials: "include",
-
         });
 
         if (res.status === 200) {
@@ -196,26 +206,29 @@ export default function Offs() {
   };
 
   const editOffHandler = (off: OffTypes) => {
-    toggleEditModalHandler()
+    toggleEditModalHandler();
     setOffEditInfo(off);
-    
   };
 
-  const formEditSubmitting = async (data:offFormTypes, event:any) => {
+  const formEditSubmitting = async (data: OffTypes, event: any) => {
     event.preventDefault();
+
+    const enPercent = convertToLatinNumber(data.percent);
+    const enExp = convertToLatinNumber(data.expireDay);
+    const enUsage = convertToLatinNumber(data.maxUsage);
 
     const res = await fetch(
       `http://localhost:4000/v1/offs/${offEditInfo?._id}`,
       {
         method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-          body: JSON.stringify({
+        body: JSON.stringify({
           code: data.code,
-          percent: data.percent,
-          expireDay: data.expireDay,
-          maxUsage: data.maxUsage,
+          percent: Number(enPercent),
+          expireDay: Number(enExp),
+          maxUsage: Number(enUsage),
         }),
         credentials: "include",
       },
@@ -286,7 +299,9 @@ export default function Offs() {
                   <p className="py-1.5 font-bold text-zinc-800">{off.code}</p>
                 </td>
                 <td className="px-8 ">
-                  <p className="font-semibold text-green-500">{off.percent.toLocaleString("fa-IR")}%</p>
+                  <p className="font-semibold text-green-500">
+                    {off.percent.toLocaleString("fa-IR")}%
+                  </p>
                 </td>
                 <td className="px-8">
                   <p className="">
@@ -316,11 +331,11 @@ export default function Offs() {
           </tbody>
         </table>
         <Pagination
-        items={allOffs}
-        itemsCount={5}
-        pathname={"/offs"}
-        setShowItems={setoffsShowPage}
-      />
+          items={allOffs}
+          itemsCount={5}
+          pathname={"/offs"}
+          setShowItems={setoffsShowPage}
+        />
       </div>
       {toggleAddModal && (
         <DetailsModal onClose={closeAddModalHandler}>
@@ -351,7 +366,7 @@ export default function Offs() {
               <input
                 id="percent"
                 {...register1("percent")}
-                type="number"
+                type="text"
                 placeholder="percent"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
@@ -366,7 +381,7 @@ export default function Offs() {
               <input
                 id="expireDay"
                 {...register1("expireDay")}
-                type="number"
+                type="text"
                 placeholder="expireDay"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
@@ -382,7 +397,7 @@ export default function Offs() {
                 id="maxUsage"
                 max={100}
                 {...register1("maxUsage")}
-                type="number"
+                type="text"
                 placeholder="maxUsage"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
@@ -399,9 +414,11 @@ export default function Offs() {
       {toggleAllOffModal && (
         <DetailsModal onClose={closeModalAllOffHandler}>
           <h2 className="text-xl font-bold">ایجاد تخفیف همگانی</h2>
-          <form onSubmit={handleSubmit3(formAllOffSubmitting)}
-          className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 ">
-          <div className="flex flex-col gap-2">
+          <form
+            onSubmit={handleSubmit3(formAllOffSubmitting)}
+            className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
+          >
+            <div className="flex flex-col gap-2">
               <label htmlFor="percent" className="text-sm font-bold">
                 درصد تخفیف
               </label>
@@ -427,7 +444,7 @@ export default function Offs() {
       )}
       {toggleEditOffModal && (
         <DetailsModal onClose={closeEditModal}>
-      <h2 className="text-xl font-bold">ویرایش کد تخفیف</h2>
+          <h2 className="text-xl font-bold">ویرایش کد تخفیف</h2>
           <form
             onSubmit={handleSubmit2(formEditSubmitting)}
             className="mt-10 grid w-full grid-cols-1 gap-6 gap-x-24 p-5 xs:grid-cols-2 lg:gap-14 "
@@ -437,7 +454,7 @@ export default function Offs() {
                 کد
               </label>
               <input
-              defaultValue={offEditInfo?.code}
+                defaultValue={offEditInfo?.code}
                 id="code"
                 {...register2("code")}
                 type="text"
@@ -453,10 +470,10 @@ export default function Offs() {
                 درصد تخفیف
               </label>
               <input
-              defaultValue={offEditInfo?.percent}
+                defaultValue={offEditInfo?.percent}
                 id="percent"
                 {...register2("percent")}
-                type="number"
+                type="text"
                 placeholder="percent"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
@@ -469,10 +486,10 @@ export default function Offs() {
                 تاریخ انقضا
               </label>
               <input
-              defaultValue={offEditInfo?.expireDay}
+                defaultValue={offEditInfo?.expireDay}
                 id="expireDay"
                 {...register2("expireDay")}
-                type="number"
+                type="text"
                 placeholder="expireDay"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />
@@ -485,11 +502,11 @@ export default function Offs() {
                 تعداد مجاز استفاده
               </label>
               <input
-              defaultValue={offEditInfo?.maxUsage}
+                defaultValue={offEditInfo?.maxUsage}
                 id="maxUsage"
                 max={100}
                 {...register2("maxUsage")}
-                type="number"
+                type="text"
                 placeholder="maxUsage"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />

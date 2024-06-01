@@ -12,6 +12,7 @@ useEffect(() => {
 
 },[])
 
+console.log(weather)
 
 const now = new Date();
 const nowFa = now.toLocaleDateString("fa-IR", {

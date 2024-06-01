@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
 import OrderTable from "../components/OrderTable";
+import { convertToLatinNumber } from "../utils/convertorNum";
 
 export default function Orders() {
   const [toggleAddModal, setToggleAddModal] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function Orders() {
   } = useForm({
     defaultValues: {
       product: "",
-      price: 0,
+      price:"",
       user: "",
     },
     resolver: yupResolver(OrderSchema),
@@ -27,6 +28,7 @@ export default function Orders() {
 
   const formSubmitting = async (data: orderFormTypes, event: any) => {
     event.preventDefault();
+    const enPrice = convertToLatinNumber(data.price)
     const res = await fetch("http://localhost:4000/v1/orders", {
       method: "POST",
       credentials: "include",
@@ -35,7 +37,7 @@ export default function Orders() {
       },
       body: JSON.stringify({
         product: data.product,
-        price: data.price,
+        price:Number(enPrice),
         user: data.user,
       }),
     });
@@ -109,7 +111,7 @@ export default function Orders() {
               <input
                 id="price"
                 {...register1("price")}
-                type="number"
+                type="text"
                 placeholder="price"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />

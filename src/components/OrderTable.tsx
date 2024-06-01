@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import OrderSchema from "../validations/OrderSchema";
 import swal from "sweetalert";
+import { convertToLatinNumber } from "../utils/convertorNum";
 
 export default function OrderTable() {
   const [allOrders, setAllOrders] = useState<OrderTypes[]>([]);
@@ -32,7 +33,7 @@ export default function OrderTable() {
       user: orderEditInfo?.user._id,
       status: orderEditInfo?.status,
     } as orderFormTypes,
-    resolver: yupResolver(OrderSchema),
+    resolver: yupResolver(OrderSchema) as any,
   });
 
   const closeEditModal = () => {
@@ -96,6 +97,7 @@ export default function OrderTable() {
         buttons: "بستن" as any,
       });
     } else {
+         const enPrice = convertToLatinNumber(data.price)
       const res = await fetch(
         `http://localhost:4000/v1/orders/${orderEditInfo?._id}`,
         {
@@ -106,7 +108,7 @@ export default function OrderTable() {
           },
           body: JSON.stringify({
             product: data?.product,
-            price: data?.price,
+            price:Number(enPrice),
             user: data?.user,
             status: data?.status,
           }),
@@ -234,7 +236,7 @@ export default function OrderTable() {
                 id="price"
                 defaultValue={orderEditInfo?.price}
                 {...register2("price")}
-                type="number"
+                type="text"
                 placeholder="price"
                 className="rounded-lg border-b-2 border-primary-pk p-1 px-4 outline-none"
               />

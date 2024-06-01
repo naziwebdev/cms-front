@@ -4,7 +4,7 @@ export interface CostTypes {
     title:string,
     status:string,
     date:string,
-    price:number,
+    price:number | string,
     _id:string,
     createdAt:string,
     updatedAt:string,
@@ -14,5 +14,5 @@ export interface CostFormTypes {
     title:string,
     status:string,
     date:Value,
-    price:number,
+    price:number | string,
 }
